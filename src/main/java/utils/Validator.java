@@ -5,15 +5,15 @@ import exceptions.InvalidDataException;
 
 
 public class Validator {
-    public static void validateName(String name) {
+    public static void validateOrganizationName(String name) {
         if (name == null || name.isEmpty()) {
             throw new InvalidDataException("Это поле не может быть пустым.");
         }
     }
 
-    public static double parseDoubleForCoordinates(String input) {
+    public static Double parseXCoordinates(String input) {
         try {
-            double value = Double.parseDouble(input);
+            Double value = Double.parseDouble(input);
             if (value <= -922) {
                 throw new InvalidDataException("Число должно быть больше -922.");
             }
@@ -23,9 +23,44 @@ public class Validator {
         }
     }
 
-    public static long validateAnnualTurnover(String input) {
+    public static long parseYCoordinates(String input) {
+        try {
+            return Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            throw new InvalidDataException("Некорректный формат данных: " + e.getMessage());
+        }
+    }
+
+    public static float parseXLocation(String input) {
+        try {
+            return Float.parseFloat(input);
+        } catch (NumberFormatException e) {
+            throw new InvalidDataException("Некорректный формат данных: " + e.getMessage());
+        }
+    }
+
+    public static double parseYLocation(String input) {
+        try {
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            throw new InvalidDataException("Некорректный формат данных: " + e.getMessage());
+        }
+    }
+
+    public static Long parseZLocation(String input) {
         if (input == null || input.isEmpty()) {
-            throw new IllegalArgumentException("Это поле не может быть пустым.");
+            throw new InvalidDataException("Это поле не может быть пустым.");
+        }
+        try {
+            return (Long) Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            throw new InvalidDataException("Некорректный формат данных: " + e.getMessage());
+        }
+    }
+
+    public static long parseAnnualTurnover(String input) {
+        if (input == null || input.isEmpty()) {
+            throw new InvalidDataException("Это поле не может быть пустым.");
         }
         try {
             long annualTurnover = Long.parseLong(input);
@@ -34,18 +69,18 @@ public class Validator {
             }
             return annualTurnover;
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Некорректный формат данных: " + e.getMessage());
+            throw new InvalidDataException("Некорректный формат данных: " + e.getMessage());
         }
     }
 
-    public static OrganizationType validateOrganizationType(String input) {
+    public static OrganizationType parseOrganizationType(String input) {
         if (input == null || input.isEmpty()) {
-            throw new IllegalArgumentException("Поле не может быть пустым.");
+            throw new InvalidDataException("Поле не может быть пустым.");
         }
         try {
             return OrganizationType.valueOf(input);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Неизвестный тип организации: " + e.getMessage());
+        } catch (InvalidDataException e) {
+            throw new InvalidDataException("Неизвестный тип организации: " + e.getMessage());
         }
     }
 
@@ -58,7 +93,7 @@ public class Validator {
         }
     }
 
-    public static long validateAndParseLongForLocation(String input) {
+    public static long parseLongForLocation(String input) {
         if (input == null || input.isEmpty()) {
             throw new InvalidDataException("Это поле не может быть пустым.");
         }

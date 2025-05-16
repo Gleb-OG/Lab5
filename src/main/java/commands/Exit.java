@@ -1,4 +1,9 @@
 package commands;
 
-public class Exit {
+import interfaces.Command;
+
+public class Exit implements Command {
+    @Override
+    public void execute(String[] args) throws Exception {
+    }
 }

@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.TreeMap;
 
+//Добавить сортировку и, возможно, переопределить методы put, remove, replace
+
 public class CollectionManager {
     private final static TreeMap<Integer, Organization> collection = new TreeMap<>();
     private final static LocalDate initializationDate = LocalDate.now();
@@ -26,5 +28,4 @@ public class CollectionManager {
     public static LocalDate getInitializationDate() {
         return initializationDate;
     }
-
 }

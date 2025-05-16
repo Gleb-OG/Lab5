@@ -1,4 +1,9 @@
 package commands;
 
-public class Info {
+import interfaces.Command;
+
+public class Info implements Command {
+    @Override
+    public void execute(String[] args) throws Exception {
+    }
 }
