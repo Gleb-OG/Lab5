@@ -1,13 +1,30 @@
 package commands;
 
+import data.Organization;
 import interfaces.Command;
+
+import java.util.TreeMap;
 
 public class Help implements Command {
     @Override
-    public void execute(String[] args) throws Exception {
-        System.out.println("Доступные команды: help, info, show, insert *key* {element}, update *id* {element}, \n" +
-                "remove_key *key*, clear, save, execute_script *file_name*, exit, remove_greater {element}, \n" +
-                "replace_if_lowe *key* {element}, remove_lower_key *key*, sum_of_annual_turnover, \n" +
-                "filter_by_annual_turnover *annualTurnover*, filter_greater_than_official_address *officialAddress*.");
+    public void execute(TreeMap<Integer, Organization> collection, String[] args) {
+        String helpMessage = """
+                - help: Справка по доступным командам
+                - info: Информация о коллекции
+                - show: Вывести все элементы коллекции
+                - insert null {element}: Добавить элемент
+                - update id {element}: Обновить значение по ключу
+                - remove_key null: Удалить элемент по ключу
+                - clear: Очистить коллекцию
+                - save: Сохранить коллекцию в файл
+                - execute_script file_name: Запустить скрипт
+                - exit: Выйти без сохранения
+                - remove_greater {element}: Удалить элементы, превышающие введенный
+                - replace_if_lowe null {element}: Заменить значение по ключу, если новое значение меньше старого
+                - remove_lower_key null: Удалить все элементы, ключ которых меньше, чем заданный
+                - sum_of_annual_turnover: Вывести сумму годового оборота всех организаций
+                - filter_by_annual_turnover annualTurnover: Вывести организации, годовой оборот которых равен введенному
+                - filter_greater_than_official_address officialAddress: Вывести организации, официальный адрес которых больше введенного.""";
+        System.out.println(helpMessage);
     }
 }

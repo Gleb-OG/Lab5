@@ -12,6 +12,9 @@ public class Validator {
     }
 
     public static Double parseXCoordinates(String input) {
+        if (input == null || input.isEmpty()) {
+            throw new InvalidDataException("Это поле не может быть пустым.");
+        }
         try {
             Double value = Double.parseDouble(input);
             if (value <= -922) {
@@ -52,7 +55,7 @@ public class Validator {
             throw new InvalidDataException("Это поле не может быть пустым.");
         }
         try {
-            return (Long) Long.parseLong(input);
+            return Long.parseLong(input);
         } catch (NumberFormatException e) {
             throw new InvalidDataException("Некорректный формат данных: " + e.getMessage());
         }
@@ -75,11 +78,11 @@ public class Validator {
 
     public static OrganizationType parseOrganizationType(String input) {
         if (input == null || input.isEmpty()) {
-            throw new InvalidDataException("Поле не может быть пустым.");
+           return null;
         }
         try {
-            return OrganizationType.valueOf(input);
-        } catch (InvalidDataException e) {
+            return OrganizationType.valueOf(input.toUpperCase());
+        } catch (IllegalArgumentException e) {
             throw new InvalidDataException("Неизвестный тип организации: " + e.getMessage());
         }
     }

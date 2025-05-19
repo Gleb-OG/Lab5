@@ -1,48 +1,54 @@
 package utils;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import com.opencsv.exceptions.CsvException;
-import data.Organization;
-import managers.CollectionManager;
+import data.*;
+import exceptions.InvalidDataException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
+//учесть, что поле address может быть null
 
 public class CSVProcessor {
-    public static void loadFromCSV(String filename) throws FileNotFoundException {
-        try (Reader reader = new FileReader(filename)) {
-            CsvToBean<Organization> csvToBean = new CsvToBeanBuilder<Organization>(reader)
-                    .withType(Organization.class).withIgnoreLeadingWhiteSpace(true).build();
+    public static List<Organization> loadFromCSV(String filename) throws IOException, InvalidDataException {
+        List<Organization> organizations = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length != 9) { throw new InvalidDataException("Некорректный формат строки: " + line); }
 
-            List<Organization> organizations = csvToBean.parse();
+                String name = parts[0];
+                Coordinates coordinates = new Coordinates(parts[1], parts[2]);
+                String annualTurnover = parts[3];
+                String type = parts[4];
+                Address address = new Address(parts[5], parts[6], parts[7], parts[8]);
 
-            for (Organization organization : organizations) {
-                CollectionManager.getCollection().put(organization.getID(), organization);
+                Organization org = new Organization(name, coordinates, annualTurnover, type, address);
+                organizations.add(org);
             }
-        } catch (IOException e) {
-            throw new FileNotFoundException("Ошибка при чтении файла: " + e);
         }
+        return organizations;
     }
 
-    public static void saveToCSV(String filename) throws CsvException, IOException {
-        try (Writer writer = new FileWriter(filename)) {
-            StatefulBeanToCsv<Organization> beanToCsv = new StatefulBeanToCsvBuilder<Organization>(writer)
-                    .withApplyQuotesToAll(false)
-                    .build();
-
-            List<Organization> organizations = new ArrayList<>(CollectionManager.getCollection().values());
-
-
-            beanToCsv.write(organizations);
-        } catch (IOException e) {
-            throw new IOException("Ошибка при записи в CSV-файл: " + e.getMessage());
-        } catch (CsvException e) {
-            throw new CsvException("Ошибка при записи в CSV-файл: " + e.getMessage());
+    public static void saveToCSV(String filename, TreeMap<Integer, Organization> collection) throws IOException {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            for (Organization org : collection.values()) {
+                String line = String.format("%d,%s,%f,%d,%s,%d,%s,%s,%f,%f,%d",
+                        org.getID(),
+                        org.getName(),
+                        org.getCoordinates().getX(),
+                        org.getCoordinates().getY(),
+                        org.getCreationDate(),
+                        org.getAnnualTurnover(),
+                        org.getType() != null ? org.getType().name() : "",
+                        org.getOfficialAddress().getStreet(),
+                        org.getOfficialAddress().getTown().getX(),
+                        org.getOfficialAddress().getTown().getY(),
+                        org.getOfficialAddress().getTown().getZ()
+                );
+                writer.println(line);
+            }
         }
     }
-
 }

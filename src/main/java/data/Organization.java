@@ -4,7 +4,7 @@ import utils.IDGenerator;
 import java.time.LocalDate;
 import static utils.Validator.*;
 
-//Реализовать интерфейс Comparable
+//Реализовать интерфейс CompareTo
 
 public class Organization {
     private final int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
@@ -15,13 +15,12 @@ public class Organization {
     private OrganizationType type; //Поле может быть null
     private Address officialAddress; //Поле может быть null
 
-    public Organization(String inputName, String inputXCoordinates, String inputYCoordinates,
-                        String inputAnnualTurnover, String inputType, String inputStreetName,
-                        String inputXTown, String inputYTown, String inputZTown) {
+    public Organization(String inputName, Coordinates coordinates,
+                        String inputAnnualTurnover, String inputType, Address address) {
         this.id = IDGenerator.generateID();
         this.creationDate = LocalDate.now();
-        this.coordinates = new Coordinates(inputXCoordinates, inputYCoordinates);
-        this.officialAddress = new Address(inputStreetName, inputXTown, inputYTown, inputZTown);
+        this.coordinates = coordinates;
+        this.officialAddress = address;
         setName(inputName);
         setAnnualTurnover(inputAnnualTurnover);
         setType(inputType);

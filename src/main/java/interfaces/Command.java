@@ -1,5 +1,9 @@
 package interfaces;
 
+import data.Organization;
+
+import java.util.TreeMap;
+
 public interface Command {
-    void execute(String[] args) throws Exception;
+    void execute(TreeMap<Integer, Organization> collection, String[] args) throws Exception;
 }
