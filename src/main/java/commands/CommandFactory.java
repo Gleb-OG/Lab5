@@ -6,28 +6,34 @@ import interfaces.Command;
 
 public class CommandFactory {
     public static Command createCommand(String input) {
-        String[] parts = input.split(" ", 2);
-        String commandName = parts[0];
-        String[] args = parts.length > 1 ? parts[1].split(" ") : new String[0];
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("Пустая команда.");
+        }
 
-        return switch (commandName) {
-            case "clear" -> new Clear();
-            case "info" -> new Info();
-            case "help" -> new Help();
-            //Придумать, как реализовать чтение {element}, null и annualTurnover из строки
-            //case "insert null {element}": return new InsertElement();
-            //case "update id {element}": return new UpdateID();
-            //case "remove_key null": return new RemoveKey();
-            case "save" -> new Save();
-            //case "execute_script file_name": return new ExecuteScript();
-            case "exit" -> new Exit();
-            //case "remove_greater {element}": return new RemoveGreater();
-            //case "remove_lower_key null" return new RemoveLower();
-            //case "replace_if_lowe null {element}": return new ReplaceIfLowe();
-            case "sum_of_annual_turnover" -> new SumOfAnnualTurnover();
-            //case "filter_by_annual_turnover annualTurnover": return new FilterByAnnualTurnover();
-            //case "filter_greater_than_official_address officialAddress": return new FilterGreaterThanOfficialAddress();
-            default -> throw new InvalidDataException("Неизвестная команда: " + commandName);
-        };
+        String[] parts = input.split(" ");
+        String commandName = parts[0].trim().toLowerCase();
+        String[] args = (parts.length > 1) ? parts[1].split(" ") : new String[0];
+
+        try {
+            return switch (commandName) {
+                case "clear" -> new Clear();
+                case "info" -> new Info();
+                case "help" -> new Help();
+                case "insert" -> new InsertElement(args);
+                case "update" -> new UpdateID(args);
+                case "save" -> new Save();
+                case "execute_script" -> new ExecuteScript();
+                case "exit" -> new Exit();
+                case "remove_greater" -> new RemoveGreater();
+                case "remove_lower_key" -> new RemoveLower(args);
+                case "replace_if_lowe" -> new ReplaceIfLowe();
+                case "sum_of_annual_turnover" -> new SumOfAnnualTurnover();
+                case "filter_by_annual_turnover" -> new FilterByAnnualTurnover();
+                case "filter_greater_than_official_address" -> new FilterGreaterThanOfficialAddress();
+                default -> throw new InvalidDataException("Неизвестная команда: " + commandName);
+            };
+        } catch (IllegalArgumentException e) {
+            throw new InvalidDataException("Неизвестная команда или некорректные аргументы");
+        }
     }
 }

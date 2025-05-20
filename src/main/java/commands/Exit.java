@@ -1,14 +1,14 @@
 package commands;
 
-import data.Organization;
 import interfaces.Command;
+import managers.CollectionManager;
 
 
 import java.util.TreeMap;
 
 public class Exit implements Command {
     @Override
-    public void execute(TreeMap<Integer, Organization> collection, String[] args) throws Exception {
+    public void execute(CollectionManager collectionManager, String[] args) throws Exception {
 
     }
 }

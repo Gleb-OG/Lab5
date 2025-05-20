@@ -1,27 +1,26 @@
 package commands;
 
-import data.Organization;
 import exceptions.InvalidDataException;
 import interfaces.Command;
-import java.util.TreeMap;
-
+import managers.CollectionManager;
 
 /**
  * Команда для очистки коллекции.
  */
+
 public class Clear implements Command {
     /**
      * Очищает коллекцию организаций.
-     * @param collection Коллекция организаций.
+     * @param collectionManager Менеджер коллекции, из которого мы получаем доступ к самой коллекции организаций.
      * @param args Аргументы команды (не используются).
      */
 
     @Override
-    public void execute(TreeMap<Integer, Organization> collection, String[] args) throws InvalidDataException {
+    public void execute(CollectionManager collectionManager, String[] args) throws InvalidDataException {
         if (args.length != 0) {
             throw new InvalidDataException("Некорректный ввод команды: команда 'clear' не принимает аргументов.");
         }
-        collection.clear();
+        collectionManager.getCollection().clear();
         System.out.println("Коллекция очищена.");
     }
 }

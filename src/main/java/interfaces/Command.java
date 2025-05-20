@@ -1,9 +1,10 @@
 package interfaces;
 
 import data.Organization;
+import managers.CollectionManager;
 
 import java.util.TreeMap;
 
 public interface Command {
-    void execute(TreeMap<Integer, Organization> collection, String[] args) throws Exception;
+    void execute(CollectionManager collectionManager, String[] args) throws Exception;
 }

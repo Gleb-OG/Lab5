@@ -3,16 +3,14 @@ package managers;
 import data.Organization;
 import exceptions.InvalidDataException;
 import utils.CSVProcessor;
-import utils.IDGenerator;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.TreeMap;
 
-//Добавить сортировку и, возможно, переопределить методы put, remove, replace
 
 public class CollectionManager {
     private TreeMap<Integer, Organization> collection = new TreeMap<>();
-    private LocalDate initializationDate;
+    private final LocalDate initializationDate;
 
     public CollectionManager(String filename) {
         this.initializationDate = LocalDate.now();
@@ -28,11 +26,13 @@ public class CollectionManager {
                 }
                 collection.put(org.getID(), org);
             });
-            int lastID = organizations.stream().mapToInt(org -> org.getID()).max().orElse(0);
-            IDGenerator.init(lastID);
         } catch(Exception e) {
             System.err.println("Файл не найден: " + e.getMessage());
         }
+    }
+
+    public void addOrganization(int key, Organization organization) {
+        collection.put(key, organization);
     }
 
     public TreeMap<Integer, Organization> getCollection() {

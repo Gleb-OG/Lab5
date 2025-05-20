@@ -1,4 +1,11 @@
 package commands;
 
-public class FilterGreaterThanOfficialAddress {
+import interfaces.Command;
+import managers.CollectionManager;
+
+public class FilterGreaterThanOfficialAddress implements Command {
+    @Override
+    public void execute(CollectionManager collectionManager, String[] args) throws Exception {
+
+    }
 }

@@ -96,14 +96,15 @@ public class Validator {
         }
     }
 
-    public static long parseLongForLocation(String input) {
+    public static int validateInt(String input) {
         if (input == null || input.isEmpty()) {
-            throw new InvalidDataException("Это поле не может быть пустым.");
+            throw new InvalidDataException("Ключ не может быть пустым.");
         }
         try {
-            return Long.parseLong(input);
+            return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new InvalidDataException("Некорректный формат данных: " + e.getMessage());
+            throw new InvalidDataException("Некорректно введено число.");
         }
     }
+
 }

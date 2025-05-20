@@ -6,7 +6,7 @@ import static utils.Validator.*;
 
 //Реализовать интерфейс CompareTo
 
-public class Organization {
+public class Organization implements Comparable<Organization> {
     private final int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -24,6 +24,17 @@ public class Organization {
         setName(inputName);
         setAnnualTurnover(inputAnnualTurnover);
         setType(inputType);
+    }
+
+    public Organization(String inputName, Coordinates coordinates,
+                        long inputAnnualTurnover, OrganizationType inputType, Address address) {
+        this.id = IDGenerator.generateID();
+        this.creationDate = LocalDate.now();
+        this.coordinates = coordinates;
+        this.officialAddress = address;
+        this.annualTurnover = inputAnnualTurnover;
+        this.type = inputType;
+        setName(inputName);
     }
 
     public int getID() {
@@ -55,5 +66,10 @@ public class Organization {
 
     public void setType(String input) {
         this.type = parseOrganizationType(input);
+    }
+
+    @Override
+    public int compareTo(Organization other) {
+        return Long.compare(this.annualTurnover, other.annualTurnover);
     }
 }

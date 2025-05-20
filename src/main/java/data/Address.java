@@ -10,6 +10,10 @@ public class Address {
         setStreet(inputStreetName);
         this.town = new Location(inputXTown, inputYTown, inputZTown);
     }
+    public Address(String inputStreetName) {
+        setStreet(inputStreetName);
+        this.town = null;
+    }
 
     public String getStreet() {
         return street;
