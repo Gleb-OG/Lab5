@@ -1,0 +1,20 @@
+package lab.commands;
+
+import lab.data.Organization;
+import java.util.TreeMap;
+
+public class Show extends Command {
+
+    public Show() {
+        super("show", "Вывод всех элементов коллекции", 0);
+    }
+
+    @Override
+    public void execute() {
+        TreeMap<Integer, Organization> organizations = collectionManager.getCollection();
+        for (Organization organization : organizations.values()) {
+            System.out.println(organization);
+        }
+        System.out.println("Количество элементов коллекции: " + organizations.size());
+    }
+}
