@@ -5,13 +5,63 @@ import lab.data.*;
 import lab.exceptions.InvalidDataException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 
 public class InteractiveParser {
     private final Scanner scanner = new Scanner(System.in);
 
-    public String collectValue() throws InvalidDataException, IllegalArgumentException {
+    public Organization wrap() {
+        if (!Main.scriptMode) {
+            Organization organization = new Organization();
+            try {
+                readOrganizationName(organization);
+                readCoordinates(organization);
+                readAnnualTurnover(organization);
+                readOrganizationType(organization);
+                readLocation(organization);
+                readAddress(organization);
+
+                System.out.println("Данные успешно собраны");
+                return organization;
+            } catch (NoSuchElementException e) {
+                System.exit(0);
+            }
+            return null;
+        } else {
+            String name = collectString();
+            if (name == null) return null;
+
+            Integer x = collectInteger();
+            if (x == null) return null;
+
+            Long y = collectLong();
+            if (y == null) return null;
+
+            Long members = collectLong();
+            if (members == null) return null;
+
+            MusicGenre genre = collectMusicGenre();
+            if (Main.scriptMode && genre == null) return null;
+
+            String studio = collectString();
+            if (studio == null) return null;
+
+            String frontman = collectString();
+            if (frontman == null) return null;
+
+            MusicBand musicBand = new MusicBand();
+            collectName(musicBand);
+            collectCoordinates(musicBand);
+            collectNumberOfParticipants(musicBand);
+            collectMusicGenre(musicBand);
+            collectStudio(musicBand);
+            return musicBand;
+        }
+    }
+
+    public String collectValue(Organization organization) throws InvalidDataException, IllegalArgumentException {
         String value = scanner.nextLine();
         if (value.trim().isEmpty()) {
             throw new InvalidDataException("Ошибка: введено пустое значение.");
@@ -19,10 +69,10 @@ public class InteractiveParser {
         return value;
     }
 
-    public String collectString() {
+    public String collectString(Organization organization) {
         while (true) {
             try {
-                return collectValue().trim();
+                return collectValue(organization).trim();
             } catch (InvalidDataException ex) {
                 if (!Main.scriptMode) System.out.println("Значение этого поля не может быть пустым");
                 else return null;
@@ -30,9 +80,9 @@ public class InteractiveParser {
         }
     }
 
-    public String readOrganizationName() {
+    public String readOrganizationName(Organization organization) {
         while (true) {
-            System.out.print("Введите название организации:");
+            System.out.print("Введите название организации: ");
             String input = scanner.nextLine().trim();
             try {
                 Validator.validateOrganizationName(input);
@@ -42,46 +92,48 @@ public class InteractiveParser {
         }
     }
 
-    public Coordinates readCoordinates() {
+    public Coordinates readCoordinates(Organization organization) {
         while (true) {
-            System.out.println("Введите координату Х:");
+            System.out.print("Введите координату Х: ");
             String inputX = scanner.nextLine().trim();
-            System.out.println("Введите координату Y:");
+            System.out.print("Введите координату Y: ");
             String inputY = scanner.nextLine().trim();
             try {
                 Double x = Validator.parseXCoordinates(inputX);
                 long y = Validator.parseYCoordinates(inputY);
                 return new Coordinates(x, y);
-            } catch (InvalidDataException ignored) {
+            } catch (InvalidDataException e) {
+                System.out.println("Неверный формат ввода числа: оба поля должны быть числами, причем Х > -922.");
             }
         }
     }
 
-    public long readAnnualTurnover() {
+    public long readAnnualTurnover(Organization organization) {
         while (true) {
             System.out.print("Введите годовой оборот: ");
             String input = scanner.nextLine().trim();
             try {
                 return Validator.parseAnnualTurnover(input);
             } catch (InvalidDataException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Годовой оборот должен быть строго положительным числом.");
             }
         }
     }
 
-    public OrganizationType readOrganizationType() {
+    public OrganizationType readOrganizationType(Organization organization) {
         while (true) {
             System.out.print("Введите тип организации (COMMERCIAL, PUBLIC, GOVERNMENT, " +
                     "PRIVATE_LIMITED_COMPANY или нажмите Enter, если тип отсутствует): ");
             String input = scanner.nextLine().trim();
             try {
                 return Validator.parseOrganizationType(input);
-            } catch (InvalidDataException ignored) {
+            } catch (InvalidDataException e) {
+                System.out.println("Введите тип организации строго из приведенного списка.");
             }
         }
     }
 
-    public Location readLocation() throws InvalidDataException {
+    public Location readLocation(Organization organization) throws InvalidDataException {
         while (true) {
             try {
                 System.out.print("Введите координату X адреса (или нажмите Enter, если координаты отсутствуют): ");
@@ -95,34 +147,36 @@ public class InteractiveParser {
                 String inputZ = scanner.nextLine().trim();
                 Long z = Validator.parseZLocation(inputZ);
                 return new Location(x, y, z);
-            } catch (InvalidDataException ignore) {
+            } catch (InvalidDataException e) {
+                System.out.println("Неверный формат ввода числа: все координаты должны быть числами.");
             }
         }
     }
 
-    public Address readAddress() throws InvalidDataException {
+    public Address readAddress(Organization organization) throws InvalidDataException {
         while (true) {
             System.out.print("Введите название улицы (или нажмите Enter, если адрес отсутствует): ");
             String streetName = scanner.nextLine().trim();
             if (streetName.isEmpty()) return null;
-            Location location = readLocation();
+            Location location = readLocation(organization);
             try {
                 streetName = Validator.validateStreetName(streetName);
                 if (location == null) {
                     return new Address(streetName);
                 }
                 return new Address(streetName, location);
-            } catch (InvalidDataException ignore) {
+            } catch (InvalidDataException e) {
+                System.out.println("Длина названия улицы не может превышать 103 символа.");
             }
         }
     }
 
     public Organization parseOrganization() throws InvalidDataException {
-        String name = readOrganizationName();
-        Coordinates coordinates = readCoordinates();
-        long annualTurnover = readAnnualTurnover();
-        OrganizationType type = readOrganizationType();
-        Address address = readAddress();
+        String name = readOrganizationName(organization);
+        Coordinates coordinates = readCoordinates(organization);
+        long annualTurnover = readAnnualTurnover(organization);
+        OrganizationType type = readOrganizationType(organization);
+        Address address = readAddress(organization);
 
         return new Organization(name, coordinates, annualTurnover, type, address);
     }

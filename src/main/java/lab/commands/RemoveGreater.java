@@ -8,17 +8,20 @@ import lab.utils.Validator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 
 public class RemoveGreater extends Command {
 
     public RemoveGreater() {
-        super("remove_greater", "Удаление элементов, превышающих введенный", 1);
+        super("remove_greater", "Удаление элементов, превышающих введенный(сравнение по годовому обороту)", 1);
     }
 
     @Override
     public void execute() throws IOException {
         if (!Main.scriptMode) {
             try {
+                System.out.println("Введите годовой оборот организации для сравнения:");
                 String sizeOfAnnualTurnoverString = Main.console.getToken(1);
 
                 if (!sizeOfAnnualTurnoverString.matches("^\\d+$")) {
@@ -28,11 +31,13 @@ public class RemoveGreater extends Command {
                 Organization compareOrg = new Organization();
                 compareOrg.setAnnualTurnover(sizeOfAnnualTurnover);
 
-                HashSet<Organization> orgsToRemove = new HashSet<>();
+                Iterator<Map.Entry<Integer, Organization>> iterator = collectionManager.getCollection().entrySet().iterator();
+
                 int countToRemove = 0;
-                for (Organization organization : collectionManager.getCollection().values()) {
-                    if (organization.compareTo(compareOrg) < 0) {
-                        orgsToRemove.add(organization);
+                while (iterator.hasNext()) {
+                    Map.Entry<Integer, Organization> entry = iterator.next();
+                    if (entry.getValue().compareTo(compareOrg) > 0) {
+                        iterator.remove();
                         countToRemove++;
                     }
                 }
@@ -42,13 +47,11 @@ public class RemoveGreater extends Command {
                         System.out.println("Нет организаций, у которых годовой оборот меньше чем " + sizeOfAnnualTurnoverString);
                     } else System.out.println("Коллекция пуста.");
                 } else {
-                    ArrayList<Integer> list = new ArrayList<>();
-                    collectionManager.getCollection().values().forEach(x -> list.add(x.getID()));
-                    list.forEach(x -> collectionManager.getCollection().remove(x));
-                    System.out.println("Удалено " + orgsToRemove.size() + " организаций с годовым оборотом меньше чем " + sizeOfAnnualTurnoverString);
+                    System.out.println("Удалено " + countToRemove +
+                            " организаций с годовым оборотом меньше чем " + sizeOfAnnualTurnoverString + ".");
                 }
             } catch (InvalidDataException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Это поле может быть только числом.");
             } catch (NumberFormatException e) {
                 System.out.println("Слишком большое число.");
             }

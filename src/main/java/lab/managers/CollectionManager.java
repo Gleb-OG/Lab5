@@ -17,28 +17,17 @@ public class CollectionManager {
     public CollectionManager() {
     }
 
-//    public void loadCollection(String filename) {
-//        try {
-//            List<Organization> organizations = CSVProcessor.loadFromCSV(filename);
-//            organizations.forEach(org -> {
-//                IDGenerator.registerID(org.getID());
-//                collection.put(org.getID(), org);
-//            });
-//        } catch(Exception e) {
-//            System.err.println("Файл не найден: " + e.getMessage());
-//        }
-//    }
-
     public void loadCollection(TreeMap<Integer, Organization> collection) {
         this.collection = collection;
     }
 
-    public void addOrganization(Organization organization) {
+    public void addOrganization(int id, Organization organization) {
         try {
-            IDGenerator.registerID(organization.getID());
-        } catch (IllegalArgumentException ignore) {
+            IDGenerator.registerID(id);
+        } catch (IllegalArgumentException e) {
+            return;
         }
-        collection.put(organization.getID(), organization);
+        collection.put(id, organization);
     }
 
     public TreeMap<Integer, Organization> getCollection() {
@@ -57,7 +46,7 @@ public class CollectionManager {
         Organization organization = getOrganizationByID(id);
         if (organization != null) {
             collection.remove(id);
-            IDGenerator.releaseID(organization.getID());
+            IDGenerator.releaseID(id);
             System.out.println("Элемент с ID: " + id + " удалён из коллекции.");
         }
     }
@@ -67,10 +56,10 @@ public class CollectionManager {
         try {
             Organization oldOrganization = getOrganizationByID(id);
             if (oldOrganization != null) {
-                collection.remove(oldOrganization.getID());
+                collection.remove(id);
                 IDGenerator.releaseID(id);
                 Organization newOrganization = parser.parseOrganization();
-                collection.put(oldOrganization.getID(), newOrganization);
+                collection.put(id, newOrganization);
             }
         } catch (IndexOutOfBoundsException ex) {
             System.out.println("Введите значение int > 0");
@@ -81,7 +70,7 @@ public class CollectionManager {
 
     public void info() {
         System.out.println("Тип коллекции: TreeMap, \n" +
-                "Дата создания: " + initializationDate + "\n," +
+                "Дата создания: " + initializationDate + ",\n" +
                 "Количество элементов: " + collection.size());
     }
 

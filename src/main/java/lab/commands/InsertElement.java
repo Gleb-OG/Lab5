@@ -15,7 +15,7 @@ public class InsertElement extends Command {
 
     @Override
     public int getArgsAmount() {
-        return Main.scriptMode ? 9 : 0;
+        return Main.scriptMode ? 9 : 1;
     }
 
     @Override
@@ -80,6 +80,16 @@ public class InsertElement extends Command {
 
     @Override
     public void execute() {
+        String updatingID = Main.console.getToken(1);
+        if (!updatingID.matches("^\\d+$")) {
+            try {
+                throw new InvalidDataException("id может быть только больше нуля.");
+            } catch (InvalidDataException ingore) {
+            }
+        }
+        int id = Integer.parseInt(updatingID);
+        System.out.println(id + "id");
+
         InteractiveParser parser = new InteractiveParser();
         Organization organization = null;
         try {
@@ -87,13 +97,14 @@ public class InsertElement extends Command {
         } catch (InvalidDataException ignored) {
         }
         if (organization != null) {
-            collectionManager.addOrganization(organization);
+            collectionManager.addOrganization(id, organization);
         }
     }
 
     @Override
     public void execute(String[] args) {
         try {
+            int id = Integer.parseInt(args[0]);
             if (args.length != 9) {
                 return;
             }
@@ -181,7 +192,7 @@ public class InsertElement extends Command {
             organization.setType(type);
             organization.setOfficialAddress(address);
 
-            collectionManager.addOrganization(organization);
+            collectionManager.addOrganization(id, organization);
 
         } catch (Exception ignored) {
         }

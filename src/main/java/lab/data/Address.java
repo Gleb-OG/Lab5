@@ -35,4 +35,13 @@ public class Address {
     public void setLocation(Location location) {
         this.town = location;
     }
+
+    @Override
+    public String toString() {
+        return " {" +
+                "\n  Street = " + street +
+                "\n  x = " + town.getX() +
+                "\n  y = " + town.getY() +
+                "\n  z = " + town.getZ() + "\n}";
+    }
 }

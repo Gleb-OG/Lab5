@@ -138,7 +138,7 @@ public class UpdateID extends Command {
             organization.setOfficialAddress(address);
 
             collectionManager.removeOrganizationByID(id);
-            collectionManager.addOrganization(organization);
+            collectionManager.addOrganization(id, organization);
             System.out.println("Организация с id " + id + " обновлена успешно.");
         } catch (Exception ignored) {
         }
