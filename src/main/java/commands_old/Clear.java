@@ -1,8 +1,7 @@
-package commands;
+package commands_old;
 
-import exceptions.InvalidDataException;
 import interfaces.Command;
-import managers.CollectionManager;
+import exceptions.InvalidDataException;
 
 /**
  * Команда для очистки коллекции.
@@ -11,12 +10,12 @@ import managers.CollectionManager;
 public class Clear implements Command {
     /**
      * Очищает коллекцию организаций.
-     * @param collectionManager Менеджер коллекции, из которого мы получаем доступ к самой коллекции организаций.
-     * @param args Аргументы команды (не используются).
+     *
+     * @param args
      */
 
     @Override
-    public void execute(CollectionManager collectionManager, String[] args) throws InvalidDataException {
+    public void execute(String[] args) throws InvalidDataException {
         if (args.length != 0) {
             throw new InvalidDataException("Некорректный ввод команды: команда 'clear' не принимает аргументов.");
         }

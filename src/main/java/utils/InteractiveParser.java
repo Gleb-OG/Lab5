@@ -1,9 +1,6 @@
 package utils;
 
-import data.Address;
-import data.Coordinates;
-import data.Organization;
-import data.OrganizationType;
+import data.*;
 import exceptions.InvalidDataException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +8,9 @@ import java.util.Scanner;
 
 
 public class InteractiveParser {
-    private static final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
-    public static String readName() {
+    public String readName() {
         while (true) {
             System.out.print("Название организации (не может быть пустым): ");
             String input = scanner.nextLine().trim();
@@ -26,7 +23,7 @@ public class InteractiveParser {
         }
     }
 
-    public static Coordinates readCoordinates() {
+    public Coordinates readCoordinates() {
         while (true) {
             System.out.println("Введите координату Х:");
             String inputX = scanner.nextLine().trim();
@@ -40,7 +37,7 @@ public class InteractiveParser {
         }
     }
 
-    public static long readAnnualTurnover() {
+    public long readAnnualTurnover() {
         while (true) {
             System.out.print("Введите годовой оборот (Должен быть > 0): ");
             String input = scanner.nextLine().trim();
@@ -52,7 +49,7 @@ public class InteractiveParser {
         }
     }
 
-    public static OrganizationType readOrganizationType() {
+    public OrganizationType readOrganizationType() {
         while (true) {
             System.out.print("Введите тип организации (COMMERCIAL, PUBLIC, GOVERNMENT, " +
                     "PRIVATE_LIMITED_COMPANY или нажмите Enter, если тип отсутствует): ");
@@ -65,48 +62,49 @@ public class InteractiveParser {
         }
     }
 
-    public static List<String> readLocation() {
+    public List<String> readLocation() throws InvalidDataException {
         while (true) {
             System.out.print("Введите координату X адреса (или нажмите Enter, если координаты отсутствуют): ");
             String inputX = scanner.nextLine().trim();
             if (inputX.isEmpty()) return null;
+            float x = Validator.parseXLocation(inputX);
             System.out.print("Введите координату Y адреса: ");
             String inputY = scanner.nextLine().trim();
+            double y = Validator.parseYLocation(inputY);
             System.out.print("Введите координату Z адреса: ");
             String inputZ = scanner.nextLine().trim();
-            try {
-                List<String> location = new ArrayList<>();
-                location.add(inputX);
-                location.add(inputY);
-                location.add(inputZ);
-                return location;
-            } catch (InvalidDataException e) {
-                System.out.println(e.getMessage());
-            }
+            List location = new ArrayList<>();
+            location.add(x);
+            location.add(inputY);
+            location.add(inputZ);
+            return location;
         }
     }
 
-    public static Address readAddress() {
+    public Address readAddress() {
         while (true) {
             System.out.print("Введите название улицы (или нажмите Enter, если адрес отсутствует): ");
             String streetName = scanner.nextLine().trim();
             if (streetName.isEmpty()) return null;
-            List<String> location = readLocation();
+            List<String> locationCoordinates = readLocation();
+            Location location = new Location(locationCoordinates.get(0),
+                    locationCoordinates.get(1), locationCoordinates.get(2));
             try {
+                streetName = Validator.validateStreetName(streetName);
                 if (location == null) return new Address(streetName);
-                return new Address(streetName, location.get(0), location.get(1), location.get(2));
+                return new Address(streetName, location);
             } catch (InvalidDataException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    public static Organization parseOrganization() {
-        String name = InteractiveParser.readName();
-        Coordinates coordinates = InteractiveParser.readCoordinates();
-        long annualTurnover = InteractiveParser.readAnnualTurnover();
-        OrganizationType type = InteractiveParser.readOrganizationType();
-        Address address = InteractiveParser.readAddress();
+    public Organization parseOrganization() {
+        String name = readName();
+        Coordinates coordinates = readCoordinates();
+        long annualTurnover = readAnnualTurnover();
+        OrganizationType type = readOrganizationType();
+        Address address = readAddress();
 
         return new Organization(name, coordinates, annualTurnover, type, address);
     }

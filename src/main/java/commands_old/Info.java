@@ -1,8 +1,8 @@
-package commands;
+package commands_old;
 
-import data.Organization;
 import interfaces.Command;
-import managers.CollectionManager;
+import data.Organization;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -11,7 +11,7 @@ import java.util.TreeMap;
 public class Info implements Command {
 
     @Override
-    public void execute(CollectionManager collectionManager, String[] args) {
+    public void execute(String[] args) {
         List<Organization> organizations = new ArrayList<>(collectionManager.getCollection().values());
         System.out.printf("""
                 Информация о коллекции:

@@ -1,12 +1,8 @@
-package commands;
+package commands_old;
 
-import data.Address;
-import data.Coordinates;
-import data.Organization;
-import data.OrganizationType;
-import exceptions.InvalidDataException;
 import interfaces.Command;
-import managers.CollectionManager;
+import data.Organization;
+import exceptions.InvalidDataException;
 import utils.InteractiveParser;
 import utils.Validator;
 
@@ -24,7 +20,7 @@ public class InsertElement implements Command {
     }
 
     @Override
-    public void execute(CollectionManager collectionManager, String[] args) {
+    public void execute(String[] args) {
         try {
             int key = Validator.validateInt(this.key);
             if (collectionManager.getCollection().containsKey(key)) {

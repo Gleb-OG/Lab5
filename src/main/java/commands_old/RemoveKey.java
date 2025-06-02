@@ -1,8 +1,7 @@
-package commands;
+package commands_old;
 
-import exceptions.InvalidDataException;
 import interfaces.Command;
-import managers.CollectionManager;
+import exceptions.InvalidDataException;
 import utils.Validator;
 
 public class RemoveKey implements Command {
@@ -19,7 +18,7 @@ public class RemoveKey implements Command {
     }
 
     @Override
-    public void execute(CollectionManager collectionManager, String[] args) throws Exception {
+    public void execute(String[] args) throws Exception {
         try {
             int id = Validator.validateInt(this.key);
             if (!collectionManager.getCollection().containsKey(id)) {

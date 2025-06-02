@@ -1,9 +1,8 @@
-package commands;
+package commands_old;
 
+import interfaces.Command;
 import data.Organization;
 import exceptions.InvalidDataException;
-import interfaces.Command;
-import managers.CollectionManager;
 import utils.InteractiveParser;
 
 import java.util.Iterator;
@@ -13,7 +12,7 @@ import java.util.TreeMap;
 
 public class RemoveGreater implements Command {
     @Override
-    public void execute(CollectionManager collectionManager, String[] args) throws Exception {
+    public void execute(String[] args) throws Exception {
         try {
             System.out.println("Введите данные организации для сравнения:");
             Organization organization = InteractiveParser.parseOrganization();

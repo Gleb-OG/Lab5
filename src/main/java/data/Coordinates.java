@@ -1,5 +1,6 @@
 package data;
 
+import exceptions.InvalidDataException;
 import utils.Validator;
 
 
@@ -10,17 +11,20 @@ public class Coordinates {
     /**
      * Задает координаты объекта класса Coordinates из двух элементов типа String,
      * соответствующих координатам "х" и "y".*/
-    public Coordinates(String inputX, String inputY) {
-        setX(inputX);
-        setY(inputY);
+    public Coordinates(Double inputX, long inputY) {
+        this.x = inputX;
+        this.y = inputY;
     }
 
-    public void setX(String input) {
-        this.x = Validator.parseXCoordinates(input);
+    public Coordinates() {
     }
 
-    public void setY(String input) {
-        this.y = Validator.parseYCoordinates(input);
+    public void setX(String inputX) throws InvalidDataException {
+        this.x = Validator.parseXCoordinates(inputX);
+    }
+
+    public void setY(String inputY) throws InvalidDataException {
+        this.y = Validator.parseYCoordinates(inputY);
     }
 
     public Double getX() {
@@ -29,5 +33,17 @@ public class Coordinates {
 
     public long getY() {
         return this.y;
+    }
+
+
+    public String fileToString() {
+        return x + "," + y;
+    }
+
+    @Override
+    public String toString() {
+        return " {" +
+                "\n      x = " + x +
+                "\n      y = " + y + "\n}";
     }
 }

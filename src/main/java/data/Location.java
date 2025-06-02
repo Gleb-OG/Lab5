@@ -1,5 +1,7 @@
 package data;
 
+import exceptions.InvalidDataException;
+
 import static utils.Validator.*;
 
 public class Location {
@@ -7,10 +9,10 @@ public class Location {
     private double y;
     private Long z; //Поле не может быть null
 
-    public Location(String inputX, String inputY, String inputZ) {
-        setX(inputX);
-        setY(inputY);
-        setZ(inputZ);
+    public Location(float inputX, double inputY, Long inputZ) {
+        this.x = inputX;
+        this.y = inputY;
+        this.z = inputZ;
     }
 
     public float getX() { return x; }
@@ -19,15 +21,27 @@ public class Location {
 
     public Long getZ() { return z; }
 
-    public void setX(String input) {
+    public void setX(String input) throws InvalidDataException {
         this.x = parseXLocation(input);
     }
 
-    public void setY(String input) {
+    public void setY(String input) throws InvalidDataException {
         this.y = parseYLocation(input);
     }
 
-    public void setZ(String input) {
+    public void setZ(String input) throws InvalidDataException {
         this.z = parseZLocation(input);
+    }
+
+    public String fileToString() {
+        return x + "," + y + "," + z;
+    }
+
+    @Override
+    public String toString() {
+        return " {" +
+                "\n      x = " + x +
+                "\n      y = " + y +
+                "\n      z = " + z + "\n}";
     }
 }

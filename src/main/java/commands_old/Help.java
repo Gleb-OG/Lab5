@@ -1,12 +1,11 @@
-package commands;
+package commands_old;
+
 
 import interfaces.Command;
-import managers.CollectionManager;
-
 
 public class Help implements Command {
     @Override
-    public void execute(CollectionManager collectionManager, String[] args) {
+    public void execute(String[] args) {
         String helpMessage = """
                 - help: Справка по доступным командам
                 - info: Информация о коллекции
@@ -19,7 +18,7 @@ public class Help implements Command {
                 - execute_script file_name: Запустить скрипт
                 - exit: Выйти без сохранения
                 - remove_greater {element}: Удалить элементы, превышающие введенный
-                - replace_if_lowe null {element}: Заменить значение по ключу, если новое значение меньше старого
+                
                 - remove_lower_key null: Удалить все элементы, ключ которых меньше, чем заданный
                 - sum_of_annual_turnover: Вывести сумму годового оборота всех организаций
                 - filter_by_annual_turnover annualTurnover: Вывести организации, годовой оборот которых равен введенному

@@ -1,13 +1,13 @@
-package commands;
+package commands_old;
 
-import exceptions.InvalidDataException;
+
 import interfaces.Command;
 
-
 public class CommandFactory {
-    public static Command createCommand(String input) {
+
+    public Command createCommand(String input) {
         if (input == null || input.isEmpty()) {
-            throw new IllegalArgumentException("Пустая команда.");
+            System.out.println("Пустая команда.");
         }
 
         String[] parts = input.split(" ");
@@ -19,21 +19,21 @@ public class CommandFactory {
                 case "clear" -> new Clear();
                 case "info" -> new Info();
                 case "help" -> new Help();
-                case "insert" -> new InsertElement(args);
-                case "update" -> new UpdateID(args);
-                case "save" -> new Save();
+                case "insert" -> new InsertElement();
+                case "update" -> new UpdateID();
+                case "save" -> new Save(saveFilename);
                 case "execute_script" -> new ExecuteScript();
                 case "exit" -> new Exit();
                 case "remove_greater" -> new RemoveGreater();
-                case "remove_lower_key" -> new RemoveLower(args);
+//                case "remove_lower_key" -> new RemoveLower();
                 case "replace_if_lowe" -> new ReplaceIfLowe();
                 case "sum_of_annual_turnover" -> new SumOfAnnualTurnover();
                 case "filter_by_annual_turnover" -> new FilterByAnnualTurnover();
                 case "filter_greater_than_official_address" -> new FilterGreaterThanOfficialAddress();
-                default -> throw new InvalidDataException("Неизвестная команда: " + commandName);
+                default -> throw new IllegalArgumentException("Неизвестная команда: " + commandName);
             };
         } catch (IllegalArgumentException e) {
-            throw new InvalidDataException("Неизвестная команда или некорректные аргументы");
+            System.out.println("Неизвестная команда или некорректные аргументы.");
         }
     }
 }

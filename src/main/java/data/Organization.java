@@ -1,6 +1,9 @@
 package data;
 
+import exceptions.InvalidDataException;
 import utils.IDGenerator;
+import utils.Validator;
+
 import java.time.LocalDate;
 import static utils.Validator.*;
 
@@ -15,26 +18,20 @@ public class Organization implements Comparable<Organization> {
     private OrganizationType type; //Поле может быть null
     private Address officialAddress; //Поле может быть null
 
-    public Organization(String inputName, Coordinates coordinates,
-                        String inputAnnualTurnover, String inputType, Address address) {
-        this.id = IDGenerator.generateID();
-        this.creationDate = LocalDate.now();
-        this.coordinates = coordinates;
-        this.officialAddress = address;
-        setName(inputName);
-        setAnnualTurnover(inputAnnualTurnover);
-        setType(inputType);
-    }
-
-    public Organization(String inputName, Coordinates coordinates,
+    public Organization(String organizationName, Coordinates coordinates,
                         long inputAnnualTurnover, OrganizationType inputType, Address address) {
         this.id = IDGenerator.generateID();
+        this.name = organizationName;
         this.creationDate = LocalDate.now();
         this.coordinates = coordinates;
         this.officialAddress = address;
         this.annualTurnover = inputAnnualTurnover;
         this.type = inputType;
-        setName(inputName);
+    }
+
+    public Organization() {
+        this.id = IDGenerator.generateID();
+        this.creationDate = LocalDate.now();
     }
 
     public int getID() {
@@ -55,17 +52,22 @@ public class Organization implements Comparable<Organization> {
 
     public Address getOfficialAddress() { return officialAddress; }
 
-    public void setName(String input) {
-        validateOrganizationName(input);
-        this.name = input;
+    public void setName(String orgName) { this.name = orgName.trim(); }
+
+    public void setAnnualTurnover(String annualTurnover) throws InvalidDataException {
+        this.annualTurnover = Validator.parseAnnualTurnover(annualTurnover);
     }
 
-    public void setAnnualTurnover(String input) {
-        this.annualTurnover = parseAnnualTurnover(input);
+    public void setType(String orgType) throws InvalidDataException {
+        this.type = Validator.parseOrganizationType(orgType);
     }
 
-    public void setType(String input) {
-        this.type = parseOrganizationType(input);
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setOfficialAddress(Address address) {
+        this.officialAddress = address;
     }
 
     @Override

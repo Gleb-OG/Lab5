@@ -1,14 +1,14 @@
-package commands;
+package commands_old;
 
-import data.Organization;
 import interfaces.Command;
-import managers.CollectionManager;
+import data.Organization;
+
 import java.util.*;
 
 
 public class Show implements Command {
     @Override
-    public void execute(CollectionManager collectionManager, String[] args) {
+    public void execute(String[] args) {
         List<Organization> organizations = new ArrayList<>(collectionManager.getCollection().values());
         Collections.sort(organizations);
         organizations.forEach(org -> System.out.println(org.toString()));
