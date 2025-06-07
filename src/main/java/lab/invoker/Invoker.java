@@ -21,8 +21,8 @@ public class Invoker {
 //        commands.put("execute_script", new ExecuteScript());
         commands.put("exit", new Exit());
         commands.put("remove_greater", new RemoveGreater());
-//        commands.put("replace_if_lower", new ReplaceIfLower());
-//        commands.put("remove_lower_key", new RemoveLower());
+        commands.put("replace_if_lower", new ReplaceIfLower());
+        commands.put("remove_lower_key", new RemoveLowerKey());
         commands.put("sum_of_annual_turnover", new SumOfAnnualTurnover());
         commands.put("filter_by_annual_turnover", new FilterByAnnualTurnover());
         commands.put("filter_greater_than_official_address", new FilterGreaterThanOfficialAddress());

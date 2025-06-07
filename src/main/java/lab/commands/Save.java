@@ -14,9 +14,9 @@ public class Save extends Command {
     public void execute() throws IOException {
         try {
         CSVProcessor.saveToCSV(Main.filename, Main.collectionManager.getCollection());
-        System.out.println("Элементы успешно сохранены в файл");
+        System.out.println("Элементы успешно сохранены в файл.");
         } catch (IOException e) {
-            throw new IOException("Доступ к файлу отсутствует");
+            throw new IOException("Доступ к файлу отсутствует.");
         }
     }
 }

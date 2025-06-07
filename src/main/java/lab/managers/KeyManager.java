@@ -16,14 +16,18 @@ public class KeyManager {
         return newKey;
     }
 
-    public static void registerKey(int id) {
-        if (usedKeys.contains(id)) {
-            throw new IllegalArgumentException("ID " + id + " уже используется.");
+    public static void registerKey(int key) {
+        if (usedKeys.contains(key)) {
+            throw new IllegalArgumentException("Ключ " + key + " уже используется.");
         }
-        usedKeys.add(id);
+        usedKeys.add(key);
     }
 
-    public static void releaseKey(int id) {
-        usedKeys.remove(id);
+    public static boolean checkKeyExisting(int key) {
+        return usedKeys.contains(key);
+    }
+
+    public static void releaseKey(int key) {
+        usedKeys.remove(key);
     }
 }

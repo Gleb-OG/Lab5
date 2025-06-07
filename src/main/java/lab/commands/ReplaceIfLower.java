@@ -3,15 +3,17 @@ package lab.commands;
 import lab.Main;
 import lab.data.*;
 import lab.exceptions.InvalidDataException;
+import lab.managers.KeyManager;
 import lab.utils.IDGenerator;
+import lab.utils.InteractiveParser;
 import lab.utils.Validator;
 
 import java.util.TreeMap;
 
-public class UpdateID extends Command {
+public class ReplaceIfLower extends Command {
 
-    public UpdateID() {
-        super("update <id>", "Обновление значения элемента коллекции по его id.", 1);
+    public ReplaceIfLower() {
+        super("replace_if_lower <key>", "Замена элемента по ключу, если новое значение меньше старого", 1);
     }
 
     @Override
@@ -31,15 +33,36 @@ public class UpdateID extends Command {
     @Override
     public void execute() {
         try {
-            String updatingID = Main.console.getToken(1);
-            if (!updatingID.matches("^\\d+$")) {
-                throw new InvalidDataException("id может быть только натуральным числом.");
+            String updatingKey = Main.console.getToken(1);
+            if (!updatingKey.matches("^\\d+$")) {
+                throw new InvalidDataException("Ключ может быть только натуральным числом.");
             }
-            int id = Validator.validateInt(updatingID);
-            TreeMap<Integer, Organization> collection = collectionManager.getCollection();
-            int key = 0;
-            for (int k : collection.keySet()) if (collection.get(k).getID() == id) key = k;
-            collectionManager.updateKey(key);
+            int key = Validator.validateInt(updatingKey);
+
+            if (KeyManager.checkKeyExisting(key)) {
+                TreeMap<Integer, Organization> collection = collectionManager.getCollection();
+                InteractiveParser parser = new InteractiveParser();
+                try {
+                    Organization oldOrganization = collectionManager.getOrganizationByKey(key);
+                    if (oldOrganization != null) {
+                        Organization newOrganization = parser.parseOrganization();
+
+                        if (collection.get(key).getAnnualTurnover() > newOrganization.getAnnualTurnover()) {
+                            collection.remove(key);
+                            collection.put(key, newOrganization);
+                            System.out.println("Элемент с ключом " + key + " успешно обновлен.");
+                        } else {
+                            System.out.println("Элемент с ключом " + key + " не был обновлен, " +
+                                    "так как у введеной организации годовой оборот больше чем у нынешней.");
+                        }
+                    }
+                } catch (IndexOutOfBoundsException ex) {
+                    System.out.println("Введите натуральное число.");
+                } catch (InvalidDataException ignore) {
+                }
+            } else {
+                System.out.println("Элемент с ключом " + key + " отсутствует.");
+            }
         } catch (InvalidDataException e) {
             System.out.println(e.getMessage());
         }

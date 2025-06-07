@@ -3,7 +3,6 @@ package lab.managers;
 import lab.Main;
 import lab.data.Organization;
 import lab.exceptions.InvalidDataException;
-import lab.utils.IDGenerator;
 import lab.utils.InteractiveParser;
 import java.time.LocalDate;
 import java.util.*;
@@ -36,7 +35,7 @@ public class CollectionManager {
         if (collection.containsKey(key)) {
             return collection.get(key);
         }
-        if(!Main.scriptMode) System.out.println("Элемента с таким ключом не обнаружено");
+        if (!Main.scriptMode) System.out.println("Элемента с таким ключом не обнаружено.");
         return null;
     }
 
@@ -68,14 +67,4 @@ public class CollectionManager {
                 "Дата создания: " + initializationDate + ",\n" +
                 "Количество элементов: " + collection.size());
     }
-//        Iterator<Map.Entry<Integer, Organization>> iterator = collection.entrySet().iterator();
-//        int removedCount = 0;
-//
-//        while (iterator.hasNext()) {
-//            Map.Entry<Integer, Organization> entry = iterator.next();
-//            if (entry.getKey() < id) {
-//                iterator.remove();
-//                removedCount++;
-//            }
-//        }
 }

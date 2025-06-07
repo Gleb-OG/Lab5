@@ -2,6 +2,7 @@ package lab.commands;
 
 import lab.Main;
 import lab.exceptions.InvalidDataException;
+import lab.managers.KeyManager;
 
 
 public class RemoveKey extends Command {
@@ -29,8 +30,12 @@ public class RemoveKey extends Command {
                 throw new InvalidDataException("id должен быть строго больше нуля.");
             }
             int key = Integer.parseInt(removingKey);
-            collectionManager.removeOrganizationByKey(key);
-            System.out.println("Элемент с ключом " + key + " удалён из коллекции.");
+            if (KeyManager.checkKeyExisting(key)) {
+                collectionManager.removeOrganizationByKey(key);
+                System.out.println("Элемент с ключом " + key + " удалён из коллекции.");
+            } else {
+                System.out.println("Элемента с ключом " + key + " не обнаружено в коллекции.");
+            }
         } catch (InvalidDataException e) {
             System.out.println(e.getMessage());
         }
