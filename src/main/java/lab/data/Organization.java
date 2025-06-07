@@ -76,8 +76,7 @@ public class Organization implements Comparable<Organization> {
 
     @Override
     public String toString() {
-        return "Organization\n" +
-                "id = " + id +
+        return "id = " + id +
                 "\nname = " + name +
                 "\ncreationDate = " + creationDate +
                 "\ncoordinates = " + coordinates +

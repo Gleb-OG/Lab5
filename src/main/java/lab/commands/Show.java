@@ -12,8 +12,10 @@ public class Show extends Command {
     @Override
     public void execute() {
         TreeMap<Integer, Organization> organizations = collectionManager.getCollection();
-        for (Organization organization : organizations.values()) {
-            System.out.println(organization);
+        for (Integer key : organizations.keySet()) {
+            System.out.println("-------Organization-------" +
+                    "\nkey = " + key +
+                    "\n" + organizations.get(key));
         }
         System.out.println("Количество элементов коллекции: " + organizations.size());
     }

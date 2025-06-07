@@ -10,17 +10,17 @@ import lab.utils.Validator;
 public class InsertElement extends Command {
 
     public InsertElement() {
-        super("insert", "Добавление элемента с заданным ключом", 1);
+        super("insert <key>", "Добавление элемента с заданным ключом", 1);
     }
 
     @Override
     public int getArgsAmount() {
-        return Main.scriptMode ? 9 : 1;
+        return Main.scriptMode ? 10 : 1;
     }
 
     @Override
     public boolean check(String[] args) {
-        if (args.length != 9) return false;
+        if (args.length != 10) return false;
 
         String name = args[0];
         if (name == null || name.trim().isEmpty()) {
@@ -79,32 +79,26 @@ public class InsertElement extends Command {
     }
 
     @Override
-    public void execute() {
-        String updatingID = Main.console.getToken(1);
-        if (!updatingID.matches("^\\d+$")) {
-            try {
-                throw new InvalidDataException("id может быть только больше нуля.");
-            } catch (InvalidDataException ingore) {
-            }
-        }
-        int id = Integer.parseInt(updatingID);
-        System.out.println(id + "id");
-
-        InteractiveParser parser = new InteractiveParser();
-        Organization organization = null;
+    public void execute() throws InvalidDataException {
         try {
-            organization = parser.parseOrganization();
-        } catch (InvalidDataException ignored) {
-        }
-        if (organization != null) {
-            collectionManager.addOrganization(id, organization);
+            String updatingKey = Main.console.getToken(1);
+            int key = Validator.validateInt(updatingKey);
+
+            InteractiveParser parser = new InteractiveParser();
+            Organization organization = parser.parseOrganization();
+            if (collectionManager.getCollection().containsKey(key)) {
+                collectionManager.removeOrganizationByKey(key);
+            }
+            collectionManager.addOrganization(key, organization);
+        } catch (InvalidDataException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     @Override
     public void execute(String[] args) {
         try {
-            int id = Integer.parseInt(args[0]);
+            int id = Validator.validateInt(args[0]);
             if (args.length != 9) {
                 return;
             }

@@ -14,8 +14,8 @@ public class RemoveKey extends Command {
         if (args.length != 1) return false;
         if (!args[0].matches("^\\d+$")) return false;
 
-        int id = Integer.parseInt(args[0]);
-        return collectionManager.getOrganizationByID(id) != null;
+        int key = Integer.parseInt(args[0]);
+        return collectionManager.getOrganizationByKey(key) != null;
     }
 
 
@@ -23,12 +23,13 @@ public class RemoveKey extends Command {
     @Override
     public void execute() {
         try {
-            String removingID = Main.console.getToken(1);
-            if (!removingID.matches("^\\d+$")) {
+            String removingKey = Main.console.getToken(1);
+            if (!removingKey.matches("^\\d+$")) {
                 throw new InvalidDataException("id должен быть строго больше нуля.");
             }
-            int id = Integer.parseInt(removingID);
-            collectionManager.removeOrganizationByID(id);
+            int key = Integer.parseInt(removingKey);
+            collectionManager.removeOrganizationByKey(key);
+            System.out.println("Элемент с ключом " + key + " удалён из коллекции.");
         } catch (InvalidDataException e) {
             System.out.println(e.getMessage());
         }
@@ -41,14 +42,14 @@ public class RemoveKey extends Command {
                 return;
             }
 
-            String removingID = args[0];
+            String removingKey = args[0];
 
-            if (!removingID.matches("^\\d+$")) {
+            if (!removingKey.matches("^\\d+$")) {
                 return;
             }
 
-            int id = Integer.parseInt(removingID);
-            collectionManager.removeOrganizationByID(id);
+            int id = Integer.parseInt(removingKey);
+            collectionManager.removeOrganizationByKey(id);
         } catch (NumberFormatException ignored) {
         }
     }

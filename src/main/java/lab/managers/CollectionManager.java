@@ -14,58 +14,53 @@ public class CollectionManager {
     private TreeMap<Integer, Organization> collection = new TreeMap<>();
     private final LocalDate initializationDate = LocalDate.now();
 
-    public CollectionManager() {
-    }
-
     public void loadCollection(TreeMap<Integer, Organization> collection) {
         this.collection = collection;
     }
 
-    public void addOrganization(int id, Organization organization) {
+    public void addOrganization(int key, Organization organization) {
         try {
-            IDGenerator.registerID(id);
+            KeyManager.registerKey(key);
         } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
             return;
         }
-        collection.put(id, organization);
+        collection.put(key, organization);
     }
 
     public TreeMap<Integer, Organization> getCollection() {
         return collection;
     }
 
-    public Organization getOrganizationByID(int id) {
-        if (collection.containsKey(id)) {
-            return collection.get(id);
+    public Organization getOrganizationByKey(int key) {
+        if (collection.containsKey(key)) {
+            return collection.get(key);
         }
-        if(!Main.scriptMode) System.out.println("Элемента с таким id не обнаружено");
+        if(!Main.scriptMode) System.out.println("Элемента с таким ключом не обнаружено");
         return null;
     }
 
-    public void removeOrganizationByID(int id) {
-        Organization organization = getOrganizationByID(id);
+    public void removeOrganizationByKey(int key) {
+        Organization organization = getOrganizationByKey(key);
         if (organization != null) {
-            collection.remove(id);
-            IDGenerator.releaseID(id);
-            System.out.println("Элемент с ID: " + id + " удалён из коллекции.");
+            collection.remove(key);
+            KeyManager.releaseKey(key);
         }
     }
 
-    public void updateID(int id) {
+    public void updateKey(int key) {
         InteractiveParser parser = new InteractiveParser();
         try {
-            Organization oldOrganization = getOrganizationByID(id);
+            Organization oldOrganization = getOrganizationByKey(key);
             if (oldOrganization != null) {
-                collection.remove(id);
-                IDGenerator.releaseID(id);
+                collection.remove(key);
                 Organization newOrganization = parser.parseOrganization();
-                collection.put(id, newOrganization);
+                collection.put(key, newOrganization);
             }
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println("Введите значение int > 0");
+            System.out.println("Введите натуральное число.");
         } catch (InvalidDataException ignore) {
         }
-
     }
 
     public void info() {
@@ -73,14 +68,6 @@ public class CollectionManager {
                 "Дата создания: " + initializationDate + ",\n" +
                 "Количество элементов: " + collection.size());
     }
-
-
-//    public void removeLower(String[] args) {
-//        int id = Validator.validateInt(args[0]);
-//        if (!getCollection().containsKey(id)) {
-//            throw new InvalidDataException("Ошибка: ключ " + id + " не существует.");
-//        }
-//        TreeMap<Integer, Organization> collection = getCollection();
 //        Iterator<Map.Entry<Integer, Organization>> iterator = collection.entrySet().iterator();
 //        int removedCount = 0;
 //
@@ -91,6 +78,4 @@ public class CollectionManager {
 //                removedCount++;
 //            }
 //        }
-//        System.out.println("Удалено элементов: " + removedCount);
-//    }
 }

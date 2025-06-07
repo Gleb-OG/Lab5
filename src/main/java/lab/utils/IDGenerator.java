@@ -2,9 +2,8 @@ package lab.utils;
 
 import java.util.HashSet;
 
+
 public class IDGenerator {
-    public IDGenerator() {
-    }
 
     private static int idCounter = 1;
 
@@ -27,8 +26,8 @@ public class IDGenerator {
         idCounter = Math.max(idCounter, id + 1);
     }
 
-    public static void releaseID(int id) {
-        usedIDs.remove(id);
+    public static boolean checkIdExisting(int id) {
+        return usedIDs.contains(id);
     }
 }
 

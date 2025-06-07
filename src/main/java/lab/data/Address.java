@@ -38,10 +38,16 @@ public class Address {
 
     @Override
     public String toString() {
+        if (town != null) {
+            return " {" +
+                    "\n  Street = " + street +
+                    "\n  x = " + town.getX() +
+                    "\n  y = " + town.getY() +
+                    "\n  z = " + town.getZ() + "\n}";
+
+        }
         return " {" +
                 "\n  Street = " + street +
-                "\n  x = " + town.getX() +
-                "\n  y = " + town.getY() +
-                "\n  z = " + town.getZ() + "\n}";
+                "\n  Town coordinates = null" + "\n}";
     }
 }

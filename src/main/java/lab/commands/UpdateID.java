@@ -6,6 +6,8 @@ import lab.exceptions.InvalidDataException;
 import lab.utils.IDGenerator;
 import lab.utils.Validator;
 
+import java.util.TreeMap;
+
 public class UpdateID extends Command {
 
     public UpdateID() {
@@ -14,7 +16,7 @@ public class UpdateID extends Command {
 
     @Override
     public int getArgsAmount() {
-        return Main.scriptMode ? 9 : 1;
+        return Main.scriptMode ? 10 : 1;
     }
 
     @Override
@@ -23,7 +25,7 @@ public class UpdateID extends Command {
         if (!args[0].matches("^\\d+$")) return false;
 
         int id = Integer.parseInt(args[0]);
-        return collectionManager.getOrganizationByID(id) != null;
+        return IDGenerator.checkIdExisting(id);
     }
 
     @Override
@@ -33,8 +35,11 @@ public class UpdateID extends Command {
             if (!updatingID.matches("^\\d+$")) {
                 throw new InvalidDataException("id может быть только больше нуля.");
             }
-            int id = Integer.parseInt(updatingID);
-            collectionManager.updateID(id);
+            int id = Validator.validateInt(updatingID);
+            TreeMap<Integer, Organization> collection = collectionManager.getCollection();
+            int key = 0;
+            for (int k : collection.keySet()) if (collection.get(k).getID() == id) key = k;
+            collectionManager.updateKey(key);
         } catch (InvalidDataException e) {
             System.out.println(e.getMessage());
         }
@@ -47,7 +52,11 @@ public class UpdateID extends Command {
         }
         try {
             int id = Integer.parseInt(args[0]);
-            Organization existOrg = collectionManager.getOrganizationByID(id);
+            TreeMap<Integer, Organization> collection = collectionManager.getCollection();
+            int key = 0;
+            for (int k : collection.keySet()) if (collection.get(k).getID() == id) key = k;
+            if (key == 0) return;
+            Organization existOrg = collectionManager.getOrganizationByKey(key);
             if (existOrg == null) {
                 return;
             }
@@ -116,8 +125,6 @@ public class UpdateID extends Command {
                 }
             }
 
-            IDGenerator.releaseID(id);
-
             Coordinates coordinates = new Coordinates();
             coordinates.setX(xCoordinates);
             coordinates.setY(yCoordinates);
@@ -137,8 +144,8 @@ public class UpdateID extends Command {
             organization.setType(type);
             organization.setOfficialAddress(address);
 
-            collectionManager.removeOrganizationByID(id);
-            collectionManager.addOrganization(id, organization);
+            collectionManager.removeOrganizationByKey(key);
+            collectionManager.addOrganization(key, organization);
             System.out.println("Организация с id " + id + " обновлена успешно.");
         } catch (Exception ignored) {
         }
