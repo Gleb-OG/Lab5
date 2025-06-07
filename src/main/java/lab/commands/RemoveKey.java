@@ -3,10 +3,11 @@ package lab.commands;
 import lab.Main;
 import lab.exceptions.InvalidDataException;
 
+
 public class RemoveKey extends Command {
 
     public RemoveKey() {
-        super("remove_key", "Удаление элемента по ключу", 1);
+        super("remove_key <key>", "Удаление элемента по ключу", 1);
     }
 
     @Override

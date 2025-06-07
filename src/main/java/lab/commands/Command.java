@@ -1,6 +1,7 @@
 package lab.commands;
 
 import lab.Main;
+import lab.exceptions.InvalidDataException;
 import lab.interfaces.CommandInterface;
 import lab.managers.CollectionManager;
 
@@ -34,7 +35,7 @@ public abstract class Command implements CommandInterface {
         return true;
     }
 
-    public void execute(String[] args) {
+    public void execute(String[] args) throws InvalidDataException {
     }
 
     @Override

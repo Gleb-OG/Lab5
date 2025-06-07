@@ -11,7 +11,7 @@ import java.util.TreeMap;
 public class UpdateID extends Command {
 
     public UpdateID() {
-        super("update", "Обновление значения элемента коллекции по его id.", 1);
+        super("update <id>", "Обновление значения элемента коллекции по его id.", 1);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class UpdateID extends Command {
         try {
             String updatingID = Main.console.getToken(1);
             if (!updatingID.matches("^\\d+$")) {
-                throw new InvalidDataException("id может быть только больше нуля.");
+                throw new InvalidDataException("id может быть только натуральным числом.");
             }
             int id = Validator.validateInt(updatingID);
             TreeMap<Integer, Organization> collection = collectionManager.getCollection();

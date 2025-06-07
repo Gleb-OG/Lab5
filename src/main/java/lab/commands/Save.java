@@ -12,8 +12,11 @@ public class Save extends Command {
 
     @Override
     public void execute() throws IOException {
-        String filename = "Collection";
-        CSVProcessor.saveToCSV(filename, Main.collectionManager.getCollection());
+        try {
+        CSVProcessor.saveToCSV(Main.filename, Main.collectionManager.getCollection());
         System.out.println("Элементы успешно сохранены в файл");
+        } catch (IOException e) {
+            throw new IOException("Доступ к файлу отсутствует");
+        }
     }
 }
