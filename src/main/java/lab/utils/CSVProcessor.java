@@ -59,7 +59,7 @@ public class CSVProcessor {
                         org.getAnnualTurnover(),
                         org.getType() != null ? org.getType().name() : "",
                         org.getOfficialAddress() != null ? org.getOfficialAddress().getStreet() : "");
-                if (org.getOfficialAddress().getTown() != null) {
+                if (org.getOfficialAddress() != null && org.getOfficialAddress().getTown() != null) {
                     line += String.format("%f,%f,%d", org.getOfficialAddress().getTown().getX(),
                             org.getOfficialAddress().getTown().getY(),
                             org.getOfficialAddress().getTown().getZ());

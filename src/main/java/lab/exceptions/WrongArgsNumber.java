@@ -1,4 +1,4 @@
-package org.example.exceptions;
+package lab.exceptions;
 
 
 public class WrongArgsNumber extends RuntimeException {

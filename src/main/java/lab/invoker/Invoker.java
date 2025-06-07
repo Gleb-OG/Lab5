@@ -1,7 +1,6 @@
 package lab.invoker;
 
 import lab.commands.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ public class Invoker {
         commands.put("remove_key", new RemoveKey());
         commands.put("clear", new Clear());
         commands.put("save", new Save());
-//        commands.put("execute_script", new ExecuteScript());
+        commands.put("execute_script", new ExecuteScript());
         commands.put("exit", new Exit());
         commands.put("remove_greater", new RemoveGreater());
         commands.put("replace_if_lower", new ReplaceIfLower());
