@@ -25,7 +25,7 @@ public class Invoker {
 //        commands.put("remove_lower_key", new RemoveLower());
         commands.put("sum_of_annual_turnover", new SumOfAnnualTurnover());
         commands.put("filter_by_annual_turnover", new FilterByAnnualTurnover());
-//        commands.put("filter_greater_than_official_address", new FilterGreaterThanOfficialAddress());
+        commands.put("filter_greater_than_official_address", new FilterGreaterThanOfficialAddress());
     }
 
     public Map<String, Command> getCommands() {

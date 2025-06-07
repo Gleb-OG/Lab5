@@ -1,0 +1,77 @@
+package lab.commands;
+
+import lab.Main;
+import lab.exceptions.InvalidDataException;
+import lab.utils.Validator;
+import java.io.IOException;
+
+
+public class FilterGreaterThanOfficialAddress extends Command {
+
+    public FilterGreaterThanOfficialAddress() {
+        super("filter_greater_than_official_address <street name>", "Вывод организаций, официальный адрес (название улицы) которых по длине больше введенного", 1);
+    }
+
+    @Override
+    public void execute() throws InvalidDataException, IOException {
+
+        if (collectionManager.getCollection().values().isEmpty()) {
+            System.out.println("Коллекция пуста.");
+            return;
+        }
+
+        try {
+            String streetName = Validator.validateStreetName(Main.console.getToken(1));
+
+            int count = 0;
+            for (int key : collectionManager.getCollection().keySet()) {
+                if (collectionManager.getCollection().get(key).getOfficialAddress() != null
+                        && collectionManager.getCollection().get(key).getOfficialAddress()
+                        .getStreet().length() > streetName.length()) {
+                    System.out.println("-------Organization-------" + "\nkey = " + key + "\n" +
+                            collectionManager.getCollection().get(key));
+                    count++;
+                }
+            }
+
+            if (count == 0 && !collectionManager.getCollection().values().isEmpty()) {
+                System.out.println("В коллекции отсутствуют организации, длина адреса которых больше " + streetName.length() + ".");
+            } else {
+                System.out.println("Все организации, длина адреса которых больше " + streetName.length() + ".");
+            }
+        } catch (InvalidDataException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void execute(String[] args) throws InvalidDataException {
+        try {
+            if (args.length != 1) return;
+
+            String streetName = Validator.validateStreetName(args[0]);
+
+            int count = 0;
+            for (int key : collectionManager.getCollection().keySet()) {
+                if (collectionManager.getCollection().get(key).getOfficialAddress() != null
+                        && collectionManager.getCollection().get(key).getOfficialAddress()
+                        .getStreet().length() > streetName.length()) {
+                    System.out.println("-------Organization-------" + "\nkey = " + key + "\n" +
+                            collectionManager.getCollection().get(key));
+                    count++;
+                }
+            }
+            if (count == 0 || collectionManager.getCollection().values().isEmpty()) {
+                if (count == 0 && !collectionManager.getCollection().values().isEmpty()) {
+                    System.out.println("В коллекции отсутствуют организации, длина адреса которых больше " + streetName.length() + ".");
+                } else {
+                    System.out.println("Коллекция пуста.");
+                }
+            } else {
+                System.out.println("Все организации, длина адреса которых больше " + streetName.length() + ".");
+            }
+        } catch (InvalidDataException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
