@@ -17,6 +17,12 @@ public class CollectionManager {
         this.collection = collection;
     }
 
+    public void loadCollectionWithoutKeys(List<Organization> organizations) {
+        TreeMap<Integer, Organization> newcollection = new TreeMap<>();
+        organizations.forEach(org -> newcollection.put(KeyManager.generateKey(), org));
+        this.collection = newcollection;
+    }
+
     public void addOrganization(int key, Organization organization) {
         try {
             KeyManager.registerKey(key);

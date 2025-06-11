@@ -13,7 +13,7 @@ import java.util.TreeMap;
 public class ReplaceIfLower extends Command {
 
     public ReplaceIfLower() {
-        super("replace_if_lower <key>", "Замена элемента по ключу, если новое значение меньше старого", 1);
+        super("replace_if_lower <key>", "Замена элемента по ключу, если годовой оборот новой организации меньше старого", 1);
     }
 
     @Override

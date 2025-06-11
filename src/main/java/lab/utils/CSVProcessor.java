@@ -9,12 +9,10 @@ import java.util.TreeMap;
 
 
 public class CSVProcessor {
-
     public static List<Organization> loadFromCSV(String filename) throws IOException, InvalidDataException {
-        String inputFile = System.getenv("COLLECTION_FILE");
         List<Organization> organizations = new ArrayList<>();
 
-        File file = new File(inputFile);
+        File file = new File(filename);
         if (!file.exists() || !file.isFile()) {
             System.out.println("Ошибка: файл не найден!");
             return organizations;
