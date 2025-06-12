@@ -1,8 +1,5 @@
 package lab.data;
 
-import lab.exceptions.InvalidDataException;
-import lab.utils.Validator;
-
 
 public class Coordinates {
     private Double x; //Значение поля должно быть больше -922, Поле не может быть null
@@ -37,7 +34,7 @@ public class Coordinates {
 
 
     public String fileToString() {
-        return x + "," + y;
+        return x + ";" + y;
     }
 
     @Override

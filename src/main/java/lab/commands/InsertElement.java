@@ -191,5 +191,4 @@ public class InsertElement extends Command {
         } catch (Exception ignored) {
         }
     }
-
 }

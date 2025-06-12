@@ -14,27 +14,53 @@ public class CSVProcessor {
 
         File file = new File(filename);
         if (!file.exists() || !file.isFile()) {
-            System.out.println("Ошибка: файл не найден!");
+            System.out.println("Ошибка: файл не найден.");
             return organizations;
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(";");
                 if (parts.length == 9) {
                     String name = parts[0];
                     try {
-                        Coordinates coordinates = new Coordinates(Validator.parseXCoordinates(parts[1]),
-                                Validator.parseYCoordinates(parts[2]));
+                        Double xCoordinates = Validator.parseXCoordinates(parts[1]);
+                        long yCoordinates = Validator.parseYCoordinates(parts[2]);
+                        Coordinates coordinates = new Coordinates(xCoordinates, yCoordinates);
                         long annualTurnover = Validator.parseAnnualTurnover(parts[3]);
                         OrganizationType type = Validator.parseOrganizationType(parts[4]);
-                        Location location = new Location(Validator.parseXLocation(parts[6]), Validator.parseYLocation(parts[7]),
-                                Validator.parseZLocation(parts[8]));
-                        Address address = new Address(Validator.validateStreetName(parts[5]), location);
-                        Organization org = new Organization(name, coordinates, annualTurnover, type, address);
-                        organizations.add(org);
-                    } catch (InvalidDataException ignore) {
+
+                        if (!parts[5].equals(" ")) {
+                            if (parts[6].equals(" ") && parts[7].equals(" ") && parts[8].equals(" ")) {
+                                String streetName = Validator.validateStreetName(parts[5]);
+                                Address address = new Address(streetName);
+
+                                Organization org = new Organization(name, coordinates, annualTurnover, type, address);
+                                organizations.add(org);
+                            } else if (!parts[6].equals(" ") && !parts[7].equals(" ") && !parts[8].equals(" ")) {
+                                String streetName = Validator.validateStreetName(parts[5]);
+                                float xLocation = Validator.parseXLocation(parts[6]);
+                                double yLocation = Validator.parseYLocation(parts[7]);
+                                Long zLocation = Validator.parseZLocation(parts[8]);
+
+                                Location location = new Location(xLocation, yLocation, zLocation);
+                                Address address = new Address(streetName, location);
+
+                                Organization org = new Organization(name, coordinates, annualTurnover, type, address);
+                                organizations.add(org);
+                            } else {
+                                throw new InvalidDataException("Неверные координаты локации организации: " + line);
+                            }
+                        } else if (parts[5].equals(" ") && parts[6].equals(" ") && parts[7].equals(" ") &&
+                                parts[8].equals(" ")) {
+                            Organization org = new Organization(name, coordinates, annualTurnover, type, null);
+                            organizations.add(org);
+                        } else {
+                            throw new InvalidDataException("Название улицы не может быть пустым: " + line);
+                        }
+                    } catch (InvalidDataException e) {
+                        System.out.println(e.getMessage());
                     }
                 } else {
                     throw new InvalidDataException("Неверное количество аргументов: " + line);
@@ -48,21 +74,19 @@ public class CSVProcessor {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
             for (Organization org : collection.values()) {
                 String line;
-                line = String.format("%d,%s,%f,%d,%s,%d,%s,%s",
-                        org.getID(),
+                line = String.format("%s;%s;%d;%d;%s;%s",
                         org.getName(),
                         org.getCoordinates().getX(),
                         org.getCoordinates().getY(),
-                        org.getCreationDate(),
                         org.getAnnualTurnover(),
-                        org.getType() != null ? org.getType().name() : "",
-                        org.getOfficialAddress() != null ? org.getOfficialAddress().getStreet() : "");
+                        org.getType() != null ? org.getType().name() : " ",
+                        org.getOfficialAddress() != null ? org.getOfficialAddress().getStreet() : " ");
                 if (org.getOfficialAddress() != null && org.getOfficialAddress().getTown() != null) {
-                    line += String.format("%f,%f,%d", org.getOfficialAddress().getTown().getX(),
+                    line += String.format(";%s;%s;%d", org.getOfficialAddress().getTown().getX(),
                             org.getOfficialAddress().getTown().getY(),
                             org.getOfficialAddress().getTown().getZ());
                 } else {
-                    line += String.format("%s,%s,%s", "", "", "");
+                    line += String.format(";%s;%s;%s", " ", " ", " ");
                 }
                 writer.println(line);
             }

@@ -1,12 +1,8 @@
 package lab.data;
 
-import lab.exceptions.InvalidDataException;
 import lab.utils.IDGenerator;
-import lab.utils.Validator;
-
 import java.time.LocalDate;
 
-//Реализовать интерфейс CompareTo
 
 public class Organization implements Comparable<Organization> {
     private final int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически

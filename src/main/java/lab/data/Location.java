@@ -33,10 +33,6 @@ public class Location {
         this.z = input;
     }
 
-    public String fileToString() {
-        return x + "," + y + "," + z;
-    }
-
     @Override
     public String toString() {
         return " {" +

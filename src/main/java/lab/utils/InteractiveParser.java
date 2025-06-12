@@ -24,32 +24,7 @@ public class InteractiveParser {
             return null;
         }
         return null;
-/*
-        else {
-
-        }
-*/
     }
-
-/*
-    public String collectValue() throws InvalidDataException, IllegalArgumentException {
-        String value = scanner.nextLine();
-        if (value.trim().isEmpty()) {
-            throw new InvalidDataException("Ошибка: введено пустое значение.");
-        }
-        return value;
-    }
-    public String collectString() {
-        while (true) {
-            try {
-                return collectValue().trim();
-            } catch (InvalidDataException ex) {
-                if (!Main.scriptMode) System.out.println("Значение этого поля не может быть пустым");
-                else return null;
-            }
-        }
-    }
-*/
 
     public String readOrganizationName() {
         while (true) {
