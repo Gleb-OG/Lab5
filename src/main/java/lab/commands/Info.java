@@ -1,5 +1,6 @@
 package lab.commands;
 
+
 public class Info extends Command {
 
     public Info() {

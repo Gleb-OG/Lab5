@@ -6,7 +6,7 @@ import java.util.Map;
 
 
 public class Invoker {
-    public Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands = new HashMap<>();
 
     public Invoker() {
         commands.put("help", new Help());

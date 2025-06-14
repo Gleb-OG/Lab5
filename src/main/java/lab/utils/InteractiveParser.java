@@ -10,22 +10,6 @@ import java.util.Scanner;
 public class InteractiveParser {
     private final Scanner scanner = new Scanner(System.in);
 
-    public Organization wrap() {
-        if (!Main.scriptMode) {
-            try {
-                Organization organization = parseOrganization();
-                System.out.println("Данные успешно собраны");
-                return organization;
-            } catch (InvalidDataException ignore) {
-            } catch (NoSuchElementException e) {
-                System.out.println("Завершение работы консоли.");
-                System.exit(0);
-            }
-            return null;
-        }
-        return null;
-    }
-
     public String readOrganizationName() {
         while (true) {
             try {
@@ -35,7 +19,7 @@ public class InteractiveParser {
                     Validator.validateOrganizationName(input);
                     return input;
                 } catch (InvalidDataException e) {
-                    System.out.println("Название организации не может быть пустым.");
+                    System.out.println(e.getMessage());
                 }
             } catch (NoSuchElementException e) {
                 System.out.println("Завершение работы консоли.");

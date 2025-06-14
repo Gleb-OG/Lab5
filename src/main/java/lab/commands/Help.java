@@ -2,6 +2,7 @@ package lab.commands;
 
 import static lab.Main.inv;
 
+
 public class Help extends Command {
 
     public Help() {
@@ -10,7 +11,7 @@ public class Help extends Command {
 
     @Override
     public void execute() {
-        for (Command command : inv.commands.values()) {
+        for (Command command : inv.getCommands().values()) {
             System.out.println("- " + command.nameOfCommand + ": " + command.getDescription());
         }
     }

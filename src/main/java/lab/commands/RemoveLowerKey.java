@@ -18,48 +18,72 @@ public class RemoveLowerKey extends Command {
 
     @Override
     public boolean check(String[] args) {
-        if (args.length != 1) return false;
-        if (!args[0].matches("^\\d+$")) return false;
-        return true;
+        return args[0].matches("^\\d+$");
     }
 
     @Override
     public void execute() throws IOException {
-        if (!Main.scriptMode) {
-            try {
-                boolean values = collectionManager.getCollection().values().isEmpty();
-                String input = Main.console.getToken(1);
-                int key = Validator.validateInt(input);
+        try {
+            boolean values = collectionManager.getCollection().values().isEmpty();
+            String input = Main.console.getToken(1);
+            int key = Validator.validateInt(input);
 
-                if (!input.matches("^\\d+$")) {
-                    throw new InvalidDataException("Это поле может быть только числом.");
-                }
-
-                Iterator<Map.Entry<Integer, Organization>> iterator = collectionManager.getCollection().entrySet().iterator();
-
-                int countToRemove = 0;
-                while (iterator.hasNext()) {
-                    Map.Entry<Integer, Organization> entry = iterator.next();
-                    if (entry.getKey() < key) {
-                        iterator.remove();
-                        KeyManager.releaseKey(entry.getKey());
-                        countToRemove++;
-                    }
-                }
-
-                if (countToRemove == 0 || values) {
-                    if (countToRemove == 0 && !values) {
-                        System.out.println("Нет элементов, у которых ключ меньше " + key + ".");
-                    } else System.out.println("Коллекция пуста.");
-                } else {
-                    System.out.println("Удалено " + countToRemove +
-                            " организаций с ключами меньше " + key + ".");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Слишком большое число.");
-            } catch (InvalidDataException e) {
-                System.out.println("Это поле может быть только положительным числом.");
+            if (!input.matches("^\\d+$")) {
+                throw new InvalidDataException("Это поле может быть только числом.");
             }
+
+            Iterator<Map.Entry<Integer, Organization>> iterator = collectionManager.getCollection().entrySet().iterator();
+
+            int countToRemove = 0;
+            while (iterator.hasNext()) {
+                Map.Entry<Integer, Organization> entry = iterator.next();
+                if (entry.getKey() < key) {
+                    iterator.remove();
+                    KeyManager.releaseKey(entry.getKey());
+                    countToRemove++;
+                }
+            }
+
+            if (countToRemove == 0 || values) {
+                if (countToRemove == 0 && !values) {
+                    System.out.println("Нет элементов, у которых ключ меньше " + key + ".");
+                } else System.out.println("Коллекция пуста.");
+            } else {
+                System.out.println("Удалено " + countToRemove +
+                        " организаций с ключами меньше " + key + ".");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Слишком большое число.");
+        } catch (InvalidDataException e) {
+            System.out.println("Это поле может быть только положительным числом.");
+        }
+    }
+
+    @Override
+    public void execute(String[] args) {
+        boolean values = collectionManager.getCollection().values().isEmpty();
+        String input = args[0];
+        int key = Integer.parseInt(input);
+
+        Iterator<Map.Entry<Integer, Organization>> iterator = collectionManager.getCollection().entrySet().iterator();
+
+        int countToRemove = 0;
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, Organization> entry = iterator.next();
+            if (entry.getKey() < key) {
+                iterator.remove();
+                KeyManager.releaseKey(entry.getKey());
+                countToRemove++;
+            }
+        }
+
+        if (countToRemove == 0 || values) {
+            if (countToRemove == 0 && !values) {
+                System.out.println("Нет элементов, у которых ключ меньше " + key + ".");
+            } else System.out.println("Коллекция пуста.");
+        } else {
+            System.out.println("Удалено " + countToRemove +
+                    " организаций с ключами меньше " + key + ".");
         }
     }
 }

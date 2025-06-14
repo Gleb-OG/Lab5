@@ -3,6 +3,7 @@ package lab.commands;
 import lab.data.Organization;
 import java.util.TreeMap;
 
+
 public class Show extends Command {
 
     public Show() {
@@ -13,7 +14,7 @@ public class Show extends Command {
     public void execute() {
         TreeMap<Integer, Organization> organizations = collectionManager.getCollection();
         for (Integer key : organizations.keySet()) {
-            System.out.println("-------Organization-------" +
+            System.out.println("---------Organization---------" +
                     "\nkey = " + key +
                     "\n" + organizations.get(key));
         }

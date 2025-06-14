@@ -62,9 +62,10 @@ public class CollectionManager {
                 Organization newOrganization = parser.parseOrganization();
                 collection.put(key, newOrganization);
             }
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Введите натуральное число.");
-        } catch (InvalidDataException ignore) {
+        } catch (InvalidDataException e) {
+            System.out.println(e.getMessage());
         }
     }
 

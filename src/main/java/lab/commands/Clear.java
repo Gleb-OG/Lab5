@@ -1,6 +1,5 @@
 package lab.commands;
 
-import lab.data.Organization;
 import lab.managers.KeyManager;
 import java.util.TreeMap;
 

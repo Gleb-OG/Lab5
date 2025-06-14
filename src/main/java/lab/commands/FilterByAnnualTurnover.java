@@ -13,6 +13,11 @@ public class FilterByAnnualTurnover extends Command {
     }
 
     @Override
+    public boolean check(String[] args) {
+        return args[0].matches("^\\d+$");
+    }
+
+    @Override
     public void execute() throws InvalidDataException, IOException {
         try {
             String sizeOfAnnualTurnover = Main.console.getToken(1);
@@ -42,32 +47,25 @@ public class FilterByAnnualTurnover extends Command {
 
     @Override
     public void execute(String[] args) throws InvalidDataException {
-        if (args.length != 1) return;
+        long annualTurnover = Long.parseLong(args[0]);
+        int count = 0;
 
-        String annualTurnoverString = args[0];
-        try {
-            long annualTurnover = Validator.parseAnnualTurnover(annualTurnoverString);
-            int count = 0;
-
-            for (int key : collectionManager.getCollection().keySet()) {
-                if (collectionManager.getCollection().get(key).getAnnualTurnover() == annualTurnover) {
-                    System.out.println("-------Organization-------" + "\nkey = " + key + "\n" +
-                            collectionManager.getCollection().get(key));
-                    count++;
-                }
+        for (int key : collectionManager.getCollection().keySet()) {
+            if (collectionManager.getCollection().get(key).getAnnualTurnover() == annualTurnover) {
+                System.out.println("-------Organization-------" + "\nkey = " + key + "\n" +
+                        collectionManager.getCollection().get(key));
+                count++;
             }
+        }
 
-            if (count == 0 || collectionManager.getCollection().values().isEmpty()) {
-                if (count == 0 && !collectionManager.getCollection().values().isEmpty()) {
-                    System.out.println("В коллекции отсутствуют организации, годовой оборот которых равен " + annualTurnoverString + ".");
-                } else {
-                    System.out.println("Коллекция пуста.");
-                }
+        if (count == 0 || collectionManager.getCollection().values().isEmpty()) {
+            if (count == 0 && !collectionManager.getCollection().values().isEmpty()) {
+                System.out.println("В коллекции отсутствуют организации, годовой оборот которых равен " + annualTurnover + ".");
             } else {
-                System.out.println("Все организации, годовой оборот которых равен " + annualTurnoverString + ".");
+                System.out.println("Коллекция пуста.");
             }
-        } catch (InvalidDataException ignore) {
+        } else {
+            System.out.println("Все организации, годовой оборот которых равен " + annualTurnover + ".");
         }
     }
-
 }

@@ -1,5 +1,6 @@
 package lab.commands;
 
+
 public class Exit extends Command {
 
     public Exit() {

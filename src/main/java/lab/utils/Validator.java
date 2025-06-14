@@ -9,6 +9,9 @@ public class Validator {
         if (name == null || name.trim().isEmpty()) {
             throw new InvalidDataException("Название организации не может быть пустым.");
         }
+        if (name.contains(";")) {
+            throw new InvalidDataException("В названии организации не может присутствовать символ \";\"");
+        }
     }
 
     public static Double parseXCoordinates(String input) throws InvalidDataException {
@@ -102,6 +105,9 @@ public class Validator {
         }
         if (streetName.length() > 103) {
             throw new InvalidDataException("Длина названия улицы не может превышать 103 символа.");
+        }
+        if (streetName.contains(";")) {
+            throw new InvalidDataException("В названии улицы не может присутствовать символ \";\"");
         }
         return streetName;
     }
