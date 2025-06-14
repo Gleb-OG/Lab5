@@ -48,12 +48,12 @@ public class ReplaceIfLower extends Command {
                         Organization newOrganization = parser.parseOrganization();
 
                         if (collection.get(key).getAnnualTurnover() > newOrganization.getAnnualTurnover()) {
-                            collection.remove(key);
-                            collection.put(key, newOrganization);
+                            collectionManager.removeOrganizationByKey(key);
+                            collectionManager.addOrganization(key, newOrganization);
                             System.out.println("Элемент с ключом " + key + " успешно обновлен.");
                         } else {
                             System.out.println("Элемент с ключом " + key + " не был обновлен, " +
-                                    "так как у введеной организации годовой оборот больше чем у нынешней.");
+                                    "так как у введенной организации годовой оборот больше или равен нынешнему.");
                         }
                     }
                 } catch (IndexOutOfBoundsException ex) {

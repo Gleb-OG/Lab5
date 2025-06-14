@@ -41,8 +41,8 @@ public class RemoveLowerKey extends Command {
                 while (iterator.hasNext()) {
                     Map.Entry<Integer, Organization> entry = iterator.next();
                     if (entry.getKey() < key) {
-                        KeyManager.releaseKey(entry.getKey());
                         iterator.remove();
+                        KeyManager.releaseKey(entry.getKey());
                         countToRemove++;
                     }
                 }

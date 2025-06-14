@@ -3,10 +3,10 @@ package lab.commands;
 import lab.Main;
 import lab.data.Organization;
 import lab.exceptions.InvalidDataException;
+import lab.managers.KeyManager;
 import lab.utils.Validator;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 
 public class RemoveGreater extends Command {
@@ -20,6 +20,7 @@ public class RemoveGreater extends Command {
         if (!Main.scriptMode) {
             try {
                 String sizeOfAnnualTurnoverString = Main.console.getToken(1);
+                List<Organization> old_collection = List.copyOf(collectionManager.getCollection().values());
 
                 if (!sizeOfAnnualTurnoverString.matches("^\\d+$")) {
                     throw new InvalidDataException("Это поле может быть только числом.");
@@ -35,14 +36,15 @@ public class RemoveGreater extends Command {
                     Map.Entry<Integer, Organization> entry = iterator.next();
                     if (entry.getValue().compareTo(compareOrg) > 0) {
                         iterator.remove();
+                        KeyManager.releaseKey(entry.getKey());
                         countToRemove++;
                     }
                 }
 
-                if (countToRemove == 0 || collectionManager.getCollection().values().isEmpty()) {
-                    if (countToRemove == 0 && ! collectionManager.getCollection().values().isEmpty()) {
-                        System.out.println("Нет организаций, у которых годовой оборот больше чем " + sizeOfAnnualTurnoverString);
-                    } else System.out.println("Коллекция пуста.");
+                if (countToRemove == 0 && !collectionManager.getCollection().values().isEmpty()) {
+                    System.out.println("Нет организаций, у которых годовой оборот больше чем " + sizeOfAnnualTurnoverString);
+                } else if (old_collection.isEmpty()) {
+                    System.out.println("Коллекция пуста.");
                 } else {
                     System.out.println("Удалено " + countToRemove +
                             " организаций с годовым оборотом больше чем " + sizeOfAnnualTurnoverString + ".");
