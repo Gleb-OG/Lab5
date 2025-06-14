@@ -30,4 +30,8 @@ public class KeyManager {
     public static void releaseKey(int key) {
         usedKeys.remove(key);
     }
+
+    public static void clearAllKeys() {
+        usedKeys.clear();
+    }
 }

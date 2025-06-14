@@ -1,9 +1,9 @@
 package lab.commands;
 
 import lab.data.Organization;
-
-import java.util.HashSet;
+import lab.managers.KeyManager;
 import java.util.TreeMap;
+
 
 public class Clear extends Command {
 
@@ -16,7 +16,8 @@ public class Clear extends Command {
         if (collectionManager.getCollection().isEmpty()) {
             System.out.println("Коллекция итак пустая.");
         } else {
-            collectionManager.loadCollection(new TreeMap<Integer, Organization>());
+            collectionManager.loadCollection(new TreeMap<>());
+            KeyManager.clearAllKeys();
             System.out.println("Коллекция очищена.");
         }
     }

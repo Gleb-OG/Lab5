@@ -20,6 +20,8 @@ public class CSVProcessor {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
+            reader.readLine();
+            reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(";");
                 if (parts.length == 9) {
@@ -72,6 +74,8 @@ public class CSVProcessor {
 
     public static void saveToCSV(String filename, TreeMap<Integer, Organization> collection) throws IOException {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            writer.println("OrganizationName;xCoordinates;yCoordinates;AnnualTurnover;OrganizationType;Street;xLocation;yLocation;zLocation");
+            writer.println("---------------------------------------------------------------------------------------------------------------");
             for (Organization org : collection.values()) {
                 String line;
                 line = String.format("%s;%s;%d;%d;%s;%s",
