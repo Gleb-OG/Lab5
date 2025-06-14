@@ -5,7 +5,10 @@ import lab.exceptions.InvalidDataException;
 import lab.interfaces.CommandInterface;
 import lab.managers.CollectionManager;
 
-
+/**
+ * Абстрактный класс, задающий общую структуру команд и реализующий у каждой из них
+ * геттеры их названия, описания и количества аргументов.
+ */
 public abstract class Command implements CommandInterface {
 
     protected static CollectionManager collectionManager = Main.collectionManager;

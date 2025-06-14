@@ -2,7 +2,9 @@ package lab.managers;
 
 import java.util.HashSet;
 
-
+/**
+ * Менеджер, управляющий ключами TreeMap: хранит использованные ключи, генерирует новые и проверяет их уникальность.
+ */
 public class KeyManager {
 
     private static HashSet<Integer> usedKeys = new HashSet<>();

@@ -3,7 +3,9 @@ package lab.utils;
 import lab.data.OrganizationType;
 import lab.exceptions.InvalidDataException;
 
-
+/**
+ * Проверяет соответствие строкового ввода соответствующему ему полю класса Organization.
+ */
 public class Validator {
     public static void validateOrganizationName(String name) throws InvalidDataException  {
         if (name == null || name.trim().isEmpty()) {

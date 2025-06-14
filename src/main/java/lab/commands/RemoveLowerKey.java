@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
-
+/**
+ * Удаляет все организации из коллекции, ключ которых меньше введенного.
+ */
 public class RemoveLowerKey extends Command {
 
     public RemoveLowerKey() {

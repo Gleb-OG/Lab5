@@ -4,7 +4,9 @@ import lab.commands.*;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Инвокер, инициализирующий и хранящий в map команды и открывающий доступ к ним через геттер.
+ */
 public class Invoker {
     private final Map<String, Command> commands = new HashMap<>();
 

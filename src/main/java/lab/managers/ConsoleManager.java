@@ -1,5 +1,8 @@
 package lab.managers;
 
+/**
+ * Хранит команды, введенные пользователем, и их аргументы в строковом представлении.
+ */
 public class ConsoleManager {
 
     private String[] tokens;

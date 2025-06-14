@@ -4,7 +4,9 @@ import lab.Main;
 import lab.utils.CSVProcessor;
 import java.io.IOException;
 
-
+/**
+ * Сохраняет актуальную коллекцию в файл, откуда считывались данные, перезаписывая его.
+ */
 public class Save extends Command {
 
     public Save() {

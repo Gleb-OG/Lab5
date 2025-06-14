@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * Команда, запускающая скрипт из файла.
+ */
 public class ExecuteScript extends Command {
     List<String> list = Arrays.asList("insert", "update", "remove_key",
             "replace_if_lower", "remove_greater", "remove_lower_key",

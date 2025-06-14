@@ -1,6 +1,8 @@
 package lab.commands;
 
-
+/**
+ * Выводит сумму годового оборота всех организаций.
+ */
 public class SumOfAnnualTurnover extends Command {
 
     public SumOfAnnualTurnover() {

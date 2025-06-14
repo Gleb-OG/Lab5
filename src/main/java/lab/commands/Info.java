@@ -1,6 +1,8 @@
 package lab.commands;
 
-
+/**
+ * Выводит информацию о коллекции.
+ */
 public class Info extends Command {
 
     public Info() {

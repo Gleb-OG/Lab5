@@ -5,8 +5,6 @@ import lab.commands.Command;
 import lab.exceptions.InvalidDataException;
 import lab.exceptions.WrongArgsNumber;
 import lab.invoker.Invoker;
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -14,7 +12,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-
+/**
+ * Менеджер, управляющий ходом работы программы: запрашивает пользовательский ввод и в целом реализует общую логику программы.
+ */
 public class RunManager {
     private Invoker inv;
     private ConsoleManager console;

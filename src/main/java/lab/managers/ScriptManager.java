@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-
+/**
+ * Менеджер скриптов: хранит путь к файлу скрипта, проверяет существование этого файла.
+ */
 public class ScriptManager {
 
     private final String filePath;

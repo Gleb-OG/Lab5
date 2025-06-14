@@ -7,7 +7,10 @@ import lab.utils.CSVProcessor;
 import lab.utils.InteractiveParser;
 import lab.utils.Validator;
 
-
+/**
+ * Команда, вставляющая введенную организацию по ключу.
+ * Если ключ уже занят другой организацией, то значение по данном ключу перезаписывается новым.
+ */
 public class InsertElement extends Command {
 
     public InsertElement() {

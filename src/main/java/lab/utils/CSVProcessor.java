@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-
+/**
+ * Реализует парсинг csv-файлов, запись в них.
+ */
 public class CSVProcessor {
     public static List<Organization> loadFromCSV(String filename) throws IOException, InvalidDataException {
         List<Organization> organizations = new ArrayList<>();

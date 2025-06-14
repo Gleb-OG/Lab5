@@ -8,7 +8,9 @@ import lab.utils.Validator;
 import java.io.IOException;
 import java.util.*;
 
-
+/**
+ * Команда, удаляющая все организации из коллекции, годовой оборот которых больше введенного.
+ */
 public class RemoveGreater extends Command {
 
     public RemoveGreater() {

@@ -1,12 +1,13 @@
 package lab.utils;
 
-import lab.Main;
 import lab.data.*;
 import lab.exceptions.InvalidDataException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-
+/**
+ * Считывает из пользовательского ввода информацию об организации.
+ */
 public class InteractiveParser {
     private final Scanner scanner = new Scanner(System.in);
 

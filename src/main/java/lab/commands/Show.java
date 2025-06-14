@@ -3,7 +3,9 @@ package lab.commands;
 import lab.data.Organization;
 import java.util.TreeMap;
 
-
+/**
+ * Команда, выводящая информацию о каждой организации в коллекции.
+ */
 public class Show extends Command {
 
     public Show() {

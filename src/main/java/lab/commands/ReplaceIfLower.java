@@ -10,7 +10,9 @@ import lab.utils.InteractiveParser;
 import lab.utils.Validator;
 import java.util.TreeMap;
 
-
+/**
+ * Заменяет по ключу существующую в коллекции организацию на введенную, если годовой оборот новой организации меньше значения существующей.
+ */
 public class ReplaceIfLower extends Command {
 
     public ReplaceIfLower() {

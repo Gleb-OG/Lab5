@@ -6,9 +6,11 @@ import lab.exceptions.InvalidDataException;
 import lab.utils.CSVProcessor;
 import lab.utils.IDGenerator;
 import lab.utils.Validator;
-
 import java.util.TreeMap;
 
+/**
+ * Команда, обновляющая по id организацию из коллекции.
+ */
 public class UpdateID extends Command {
 
     public UpdateID() {

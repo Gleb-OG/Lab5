@@ -5,7 +5,9 @@ import lab.exceptions.InvalidDataException;
 import lab.utils.Validator;
 import java.io.IOException;
 
-
+/**
+ * Команда, выводящая организации из коллекции, годовой оборот которых равен введенному.
+ */
 public class FilterByAnnualTurnover extends Command {
 
     public FilterByAnnualTurnover() {

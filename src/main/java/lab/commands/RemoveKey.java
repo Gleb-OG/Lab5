@@ -4,7 +4,9 @@ import lab.Main;
 import lab.exceptions.InvalidDataException;
 import lab.managers.KeyManager;
 
-
+/**
+ * Команда, удаляющая организацию из коллекции по ключу.
+ */
 public class RemoveKey extends Command {
 
     public RemoveKey() {

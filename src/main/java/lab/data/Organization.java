@@ -3,7 +3,9 @@ package lab.data;
 import lab.utils.IDGenerator;
 import java.time.LocalDate;
 
-
+/**
+ * Класс, представляющий структуру организации.
+ */
 public class Organization implements Comparable<Organization> {
     private final int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой

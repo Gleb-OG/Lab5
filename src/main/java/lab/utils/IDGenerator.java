@@ -2,7 +2,9 @@ package lab.utils;
 
 import java.util.HashSet;
 
-
+/**
+ * Отвечает за работу с id: генерирует id, проверяет его уникальность.
+ */
 public class IDGenerator {
 
     private static int idCounter = 1;

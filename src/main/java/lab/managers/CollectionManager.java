@@ -7,7 +7,10 @@ import lab.utils.InteractiveParser;
 import java.time.LocalDate;
 import java.util.*;
 
-
+/**
+ * Менеджер, управляющий коллекцией: хранит коллекцию, предоставляет доступ
+ * к ее редактированию и информации о ней.
+ */
 public class CollectionManager {
 
     private TreeMap<Integer, Organization> collection = new TreeMap<>();

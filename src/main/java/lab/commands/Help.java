@@ -2,7 +2,9 @@ package lab.commands;
 
 import static lab.Main.inv;
 
-
+/**
+ * Выводит справку по доступным командам.
+ */
 public class Help extends Command {
 
     public Help() {

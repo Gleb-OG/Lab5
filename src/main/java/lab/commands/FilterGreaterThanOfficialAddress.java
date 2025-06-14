@@ -5,7 +5,9 @@ import lab.exceptions.InvalidDataException;
 import lab.utils.Validator;
 import java.io.IOException;
 
-
+/**
+ * Команда, выводящая организации, название улицы которых по длине больше введенного.
+ */
 public class FilterGreaterThanOfficialAddress extends Command {
 
     public FilterGreaterThanOfficialAddress() {

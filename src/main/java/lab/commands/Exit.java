@@ -1,6 +1,8 @@
 package lab.commands;
 
-
+/**
+ * Команда, завершающая работу программы без сохранения.
+ */
 public class Exit extends Command {
 
     public Exit() {
