@@ -1,7 +1,7 @@
 package lab.commands;
 
 import lab.Main;
-import lab.data.*;
+import lab.model.*;
 import lab.exceptions.InvalidDataException;
 import lab.utils.CSVProcessor;
 import lab.utils.InteractiveParser;

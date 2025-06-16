@@ -1,6 +1,6 @@
 package lab.commands;
 
-import lab.data.Organization;
+import lab.model.Organization;
 import java.util.TreeMap;
 
 /**

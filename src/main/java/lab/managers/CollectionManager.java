@@ -1,7 +1,7 @@
 package lab.managers;
 
 import lab.Main;
-import lab.data.Organization;
+import lab.model.Organization;
 import lab.exceptions.InvalidDataException;
 import lab.utils.InteractiveParser;
 import java.time.LocalDate;

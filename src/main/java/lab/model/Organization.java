@@ -1,4 +1,4 @@
-package lab.data;
+package lab.model;
 
 import lab.utils.IDGenerator;
 import java.time.LocalDate;

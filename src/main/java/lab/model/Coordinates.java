@@ -1,4 +1,4 @@
-package lab.data;
+package lab.model;
 
 
 public class Coordinates {

@@ -1,6 +1,6 @@
 package lab.utils;
 
-import lab.data.*;
+import lab.model.*;
 import lab.exceptions.InvalidDataException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;

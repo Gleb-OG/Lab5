@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Команда, запускающая скрипт из файла.
+ * Пустые поля вводимого объекта обозначать как "_".
  */
 public class ExecuteScript extends Command {
     List<String> list = Arrays.asList("insert", "update", "remove_key",

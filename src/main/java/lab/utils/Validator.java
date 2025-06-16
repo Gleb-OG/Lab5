@@ -1,6 +1,6 @@
 package lab.utils;
 
-import lab.data.OrganizationType;
+import lab.model.OrganizationType;
 import lab.exceptions.InvalidDataException;
 
 /**

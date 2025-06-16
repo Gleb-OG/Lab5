@@ -1,4 +1,4 @@
-package lab.data;
+package lab.model;
 
 import lab.exceptions.InvalidDataException;
 import lab.utils.Validator;
